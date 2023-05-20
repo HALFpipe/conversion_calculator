@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "conversion-calculator"
+version = "0.1.0"
+description = "A Python Shiny application that provides functions necessary to convert verbal learning scores."
+authors = ["Jason A. Staph <jstaph@staph.us>"]
+readme = "README.md"
+packages = [{include = "conversion_calculator", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+shiny = "^0.3.3"
+htmltools = "^0.2.1"
+pandas = "^2.0.1"
+shinyswatch = "^0.2.3"
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.13.2"
+pytest = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
