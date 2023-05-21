@@ -5,6 +5,7 @@ description = "A Python Shiny application that provides functions necessary to c
 authors = ["Jason A. Staph <jstaph@staph.us>"]
 readme = "README.md"
 packages = [{include = "conversion_calculator", from = "src"}]
+include = ["src/conversion_calculator/static/*"]
 
 [tool.poetry.dependencies]
 python = "^3.9"
