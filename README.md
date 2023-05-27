@@ -39,9 +39,9 @@ This is a [poetry](https://python-poetry.org/) based project, and assumes a rece
          1. instrument
          2. instrument metadata type
    * cvlt, cvltc, ravlt, hvlt are the instrument names
-   * dr, imfr, sdcr, sdfr, ldfr, ldcr, recog are the item names
-   * t1, t2, t3, t4, t5, t15, tb are the trial names
-   * total, hits, c, i are the value types
+   * dr, imfr, sdcr, sdfr, ldfr, ldcr, recog, rep, int are the item names
+   * t1, t2, t3, t4, t5, t13, t15, tb, b are the trial names
+   * total, hits, c, i, fp are the value types
    * form, version are instrument metadata types
    * conditionals
       * if instrument is 'cvltc', ignore
