@@ -13,10 +13,12 @@ shiny = "^0.3.3"
 htmltools = "^0.2.1"
 pandas = "^2.0.1"
 shinyswatch = "^0.2.3"
+pydantic = "^1.10.8"
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.13.2"
 pytest = "^7.3.1"
+isort = "^5.12.0"
 
 [build-system]
 requires = ["poetry-core"]

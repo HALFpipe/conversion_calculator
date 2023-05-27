@@ -1,6 +1,5 @@
-import shinyswatch
 import pandas as pd
-
+import shinyswatch
 from shiny import App, render, ui
 
 app_ui = ui.page_navbar(
@@ -8,7 +7,7 @@ app_ui = ui.page_navbar(
     #  cerulean, cosmo, cyborg, darkly, flatly, journal, litera, lumen, lux,
     #  materia, minty, morph, pulse, quartz, sandstone, simplex, sketchy, slate,
     #  solar, spacelab, superhero, united, vapor, yeti, zephyr
-    #shinyswatch.theme.pulse(),
+    # shinyswatch.theme.pulse(),
     shinyswatch.theme.superhero(),
     ui.nav(
         "",
@@ -41,10 +40,12 @@ app_ui = ui.page_navbar(
     title="Conversion Calculator",
 )
 
+
 def server(input, output, session):
     @output
     @render.text
     def txt():
         return f"n*2 is {input.n() * 2}"
+
 
 app = App(app_ui, server)
