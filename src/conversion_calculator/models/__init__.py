@@ -2,7 +2,15 @@ import re
 from pydantic import BaseModel, root_validator
 
 
-__all__ = ["Instrument", "InstrumentItem", "InstrumentMetadataType", "Trial", "ValueType", "ColumnName"]
+__all__ = [
+    "Instrument",
+    "InstrumentItem",
+    "InstrumentMetadataType",
+    "Trial",
+    "ValueType",
+    "ColumnName",
+]
+
 
 class Instrument(BaseModel):
     id: str
@@ -58,7 +66,6 @@ class InstrumentItem(BaseModel):
 class InstrumentMetadataType(BaseModel):
     id: str
 
-
     @root_validator
     def validate_instrument_metadata_type(cls, values):
         """Get class and class values, and lookup the friendly name"""
@@ -95,7 +102,7 @@ class Trial(BaseModel):
             "t13": "Trial 1-3",
             "t15": "Trial 1-5",
             "tb": "Total",
-            "b": "EDITOR: add friendly name"
+            "b": "EDITOR: add friendly name",
         }
 
         if not re.match(TRIAL_NAME_REGEX, values["id"]):
@@ -146,31 +153,35 @@ class ColumnName(BaseModel):
                 "Invalid 'column_name' format. It should match the pattern: ^(cvlt|cvltc|ravlt|hvlt)_([a-z_])+$"
             )
 
-        values['column_name_components'] = column_name.split("_")
+        values["column_name_components"] = column_name.split("_")
 
-        if 5 < len(values['column_name_components']) < 1:
+        if 5 < len(values["column_name_components"]) < 1:
             raise ValueError(
                 "Invalid 'column_name' format. It should match the pattern: ^(cvlt|cvltc|ravlt|hvlt)_([a-z_])+$"
             )
 
-        if len(values['column_name_components']) == 2:
-            values["instrument"] = Instrument(id=values['column_name_components'][0])
+        if len(values["column_name_components"]) == 2:
+            values["instrument"] = Instrument(id=values["column_name_components"][0])
             values["instrument_metadata_type"] = InstrumentMetadataType(
-                id=values['column_name_components'][1]
+                id=values["column_name_components"][1]
             )
             return values
 
-        if len(values['column_name_components']) == 3:
-            values["instrument"] = Instrument(id=values['column_name_components'][0])
-            values["instrument_item"] = InstrumentItem(id=values['column_name_components'][1])
-            values["value_type"] = ValueType(id=values['column_name_components'][2])
+        if len(values["column_name_components"]) == 3:
+            values["instrument"] = Instrument(id=values["column_name_components"][0])
+            values["instrument_item"] = InstrumentItem(
+                id=values["column_name_components"][1]
+            )
+            values["value_type"] = ValueType(id=values["column_name_components"][2])
             return values
 
-        if len(values['column_name_components']) == 4:
-            values["instrument"] = Instrument(id=values['column_name_components'][0])
-            values["instrument_item"] = InstrumentItem(id=values['column_name_components'][1])
-            values["trial"] = Trial(id=values['column_name_components'][2])
-            values["value_type"] = ValueType(id=values['column_name_components'][3])
+        if len(values["column_name_components"]) == 4:
+            values["instrument"] = Instrument(id=values["column_name_components"][0])
+            values["instrument_item"] = InstrumentItem(
+                id=values["column_name_components"][1]
+            )
+            values["trial"] = Trial(id=values["column_name_components"][2])
+            values["value_type"] = ValueType(id=values["column_name_components"][3])
             return values
 
         return values
