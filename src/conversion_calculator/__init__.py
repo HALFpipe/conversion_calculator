@@ -1,1 +1,3 @@
-__all__ = ["lib"]
+__all__ = ["lib", "models", "crosswalks"]
+
+__version__ = "0.1.0"

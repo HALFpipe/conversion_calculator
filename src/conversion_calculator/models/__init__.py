@@ -201,8 +201,8 @@ class Column(BaseModel):
             "ravlt_recog_hits": 0,
             "hvlt_version": 0,
             "hvlt_imfr_t1_c": 0,
-            "hvlt_imfr_t2_c": 0	,
-            "hvlt_imfr_t3_c": 0	,
+            "hvlt_imfr_t2_c": 0,
+            "hvlt_imfr_t3_c": 0,
             "hvlt_imfr_t13_total": 0,
             "hvlt_dr_c": 0,
             "hvlt_recog_hits": 0,
@@ -300,18 +300,19 @@ class Column(BaseModel):
 
         return values
 
+
 class CrossWalk(BaseModel):
-    column_order: Dict[int, Column]
-    instrument: Instrument
-    instrument_item: InstrumentItem
+    column_order: Dict[str, int]
     lookup_table: np.ndarray
-    trial: Optional[Trial]
+    source_instrument: Instrument
+    source_instrument_item: Optional[InstrumentItem] = None
+    source_trial: Optional[Trial] = None
 
     class Config:
         arbitrary_types_allowed = True
 
-    @validator('lookup_table')
+    @validator("lookup_table")
     def validate_lookup_table(cls, lookup_table):
         if not isinstance(lookup_table, np.ndarray):
-            raise ValueError('Invalid array type. Expected numpy.ndarray.')
+            raise ValueError("Invalid array type. Expected numpy.ndarray.")
         return lookup_table
