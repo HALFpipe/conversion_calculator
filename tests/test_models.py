@@ -171,8 +171,10 @@ def test_valuetype(id, friendly_name):
     ],
 )
 def test_in_scope_column_name(column_name, column_name_components):
-    column_name = conversion_calculator.models.ColumnName(column_name=column_name)
-    assert column_name.column_name_components == column_name_components
+    column = conversion_calculator.models.Column(column_name=column_name)
+    assert column.column_name_components == column_name_components
+    assert column.min_value == 0
+    assert isinstance(column.max_value, int) or column.max_value is None
 
 
 @pytest.mark.parametrize(
@@ -195,5 +197,5 @@ def test_in_scope_column_name(column_name, column_name_components):
 )
 def test_out_of_scope_column_name(column_name):
     with pytest.raises(ValueError):
-        column_name = conversion_calculator.models.ColumnName(column_name=column_name)
+        column_name = conversion_calculator.models.Column(column_name=column_name)
         assert column_name.column_name_components == column_name_components
