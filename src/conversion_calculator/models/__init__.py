@@ -1,8 +1,8 @@
 import re
-import numpy as np
-from typing import Optional, Dict, List, Union
-from pydantic import BaseModel, root_validator, validator
+from typing import Dict, List, Optional, Union
 
+import numpy as np
+from pydantic import BaseModel, root_validator, validator
 
 __all__ = [
     "Instrument",

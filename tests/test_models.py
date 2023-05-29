@@ -1,4 +1,5 @@
 import pytest
+
 import conversion_calculator.models
 
 
