@@ -1,4 +1,6 @@
+import sys
 import numpy as np
+import inspect
 from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, Trial
 
 instrument_cvlt = Instrument(id="cvlt")

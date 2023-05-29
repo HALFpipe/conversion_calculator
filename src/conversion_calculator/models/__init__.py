@@ -1,6 +1,6 @@
 import re
 import numpy as np
-from typing import Optional, Dict
+from typing import Optional, Dict, List, Union
 from pydantic import BaseModel, root_validator, validator
 
 
@@ -142,8 +142,17 @@ class ValueType(BaseModel):
 
 class Column(BaseModel):
     column_name: str
+    column_values: Optional[List[int]] = None
     min_value: Optional[int]
     max_value: Optional[int]
+    instrument: Optional[Instrument]
+    instrument_item: Optional[InstrumentItem]
+    instrument_metadata_type: Optional[InstrumentMetadataType]
+    trial: Optional[Trial]
+    value_type: Optional[ValueType]
+
+    class Config:
+        arbitrary_types_allowed = True
 
     @root_validator
     def validate_column_name(cls, values):
@@ -151,6 +160,8 @@ class Column(BaseModel):
         COLUMN_TITLE_REGEX = r"^(cvlt|cvltc|ravlt|hvlt)_([a-z_0-9])+$"
 
         column_name = values.get("column_name")
+
+        # ToDo: consider creating bounds models for these
         min_values = {
             "cvlt_form": 0,
             "cvlt_imfr_t1_c": 0,

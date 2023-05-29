@@ -1,20 +1,22 @@
 import io
-from conversion_calculator.lib import (
-    integer_check,
-    get_csv_template_as_io,
-    get_csv_template_as_str,
-)
+import conversion_calculator
 
 
 def test_get_csv_template_as_str():
-    assert isinstance(get_csv_template_as_str(), str)
+    assert isinstance(conversion_calculator.lib.get_csv_template_as_str(), str)
 
 
 def test_get_csv_template_as_io():
-    assert isinstance(get_csv_template_as_io(), io.StringIO)
+    assert isinstance(conversion_calculator.lib.get_csv_template_as_io(), io.StringIO)
 
 
 def test_integer_check():
-    assert integer_check(5) == True
-    assert integer_check(5.0) == True
-    assert integer_check(5.1) == False
+    assert conversion_calculator.lib.integer_check(5) == True
+    assert conversion_calculator.lib.integer_check(5.0) == True
+    assert conversion_calculator.lib.integer_check(5.1) == False
+
+def test_convert_values():
+    from conversion_calculator import models
+    source_column = conversion_calculator.models.Column(column_name='cvlt_ldfr_c', column_values=[10])
+    target_column = conversion_calculator.models.Column(column_name='ravlt_ldfr_c')
+    assert conversion_calculator.lib.convert_values(source_column, target_column) == [9]
