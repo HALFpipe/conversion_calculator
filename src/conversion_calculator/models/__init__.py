@@ -41,7 +41,7 @@ class InstrumentItem(BaseModel):
     id: str
 
     @root_validator
-    def validate_instrument(cls, values):
+    def validate_instrumentitem(cls, values):
         """Get class and class values, and lookup the friendly name"""
         INSTRUMENT_ITEM_NAME_REGEX = r"^(dr|imfr|ldfr|ldcr|recog|sdcr|sdfr|rep|int)$"
         instrument_item_id_to_friendly_name = {
