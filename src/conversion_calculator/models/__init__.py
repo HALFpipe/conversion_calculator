@@ -319,8 +319,17 @@ class Column(BaseModel):
                 raise ValueError("Invalid column_values. Expected a single column dataframe.")
             if values['column_name'] != value.columns[0]:
                 raise ValueError("Invalid column_values. Expected column name to match column_name.")
+            if not value.iloc[:, 0].apply(lambda x: isinstance(x, (int, float))).all():
+                raise ValueError("Invalid column_values. Expected a single column dataframe of numeric values.")
+            # check that the index of the first int or float is 0, and no NaNs have an index of 0 skipping the column name
+            if value.iloc[:, 0].apply(lambda x: isinstance(x, (int, float))).idxmax() != 0:
+                raise ValueError("Invalid column_values. Expected a single column dataframe with no NaNs above the first numeric value.")
+
             return value
         elif isinstance(value, list):
+            for v in value:
+                if not isinstance(v, (int, float)):
+                    raise ValueError("Invalid column_values. Expected a list of numeric values.")
             return pd.DataFrame({values['column_name']: value})
         else:
             return pd.DataFrame({values['column_name']: []})

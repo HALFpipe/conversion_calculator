@@ -225,3 +225,19 @@ def test_can_create_column_with_pandas_column_values():
     assert column.column_values.columns == [default_column_name]
     assert column.column_values.shape == (3, 1)
     assert column.column_values.compare(default_values).empty
+
+def test_can_not_create_column_with_bad_column_values():
+    string_column_name = "cvlt_sdfr_c"
+    string_values = pd.DataFrame({string_column_name: ['zero', 'one', 'two'] })
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.Column(
+            column_name = string_column_name,
+            column_values = string_values,
+        )
+    leading_nan_column_name = "cvlt_sdfr_c"
+    leading_nan_values = pd.DataFrame({string_column_name: [None, 'one', 'two'] })
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.Column(
+            column_name = leading_nan_column_name,
+            column_values = leading_nan_values,
+        )
