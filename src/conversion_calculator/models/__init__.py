@@ -1,6 +1,7 @@
 import re
 from typing import Dict, List, Optional, Union
 
+import pandas as pd
 import numpy as np
 from pydantic import BaseModel, root_validator, validator
 
@@ -142,7 +143,7 @@ class ValueType(BaseModel):
 
 class Column(BaseModel):
     column_name: str
-    column_values: Optional[List[int]] = None
+    column_values: Optional[Union[List[int], pd.DataFrame]]
     min_value: Optional[int]
     max_value: Optional[int]
     instrument: Optional[Instrument]
@@ -311,6 +312,18 @@ class Column(BaseModel):
 
         return values
 
+    @validator('column_values', pre=True)
+    def convert_to_dataframe_or_default(cls, value, values):
+        if isinstance(value, pd.DataFrame):
+            if value.shape[1] != 1:
+                raise ValueError("Invalid column_values. Expected a single column dataframe.")
+            if values['column_name'] != value.columns[0]:
+                raise ValueError("Invalid column_values. Expected column name to match column_name.")
+            return value
+        elif isinstance(value, list):
+            return pd.DataFrame({values['column_name']: value})
+        else:
+            return pd.DataFrame({values['column_name']: []})
 
 class CrossWalk(BaseModel):
     column_order: Dict[str, int]

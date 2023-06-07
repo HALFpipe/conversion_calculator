@@ -1,4 +1,5 @@
 import pytest
+import pandas as pd
 
 import conversion_calculator.models
 
@@ -200,3 +201,27 @@ def test_out_of_scope_column_name(column_name):
     with pytest.raises(ValueError):
         column_name = conversion_calculator.models.Column(column_name=column_name)
         assert column_name.column_name_components == column_name_components
+
+def test_can_create_column_with_list_column_values():
+    default_column_name = "cvlt_sdfr_c"
+    default_values = [0, 1, 2] 
+    column = conversion_calculator.models.Column(
+        column_name = default_column_name,
+        column_values = default_values,
+    )
+    assert column.column_name == default_column_name
+    assert column.column_values.columns == [default_column_name]
+    assert column.column_values.shape == (3, 1)
+    assert (column.column_values.to_numpy().flatten() == default_values).all()
+
+def test_can_create_column_with_pandas_column_values():
+    default_column_name = "cvlt_sdfr_c"
+    default_values = pd.DataFrame({default_column_name: [0, 1, 2] })
+    column = conversion_calculator.models.Column(
+        column_name = default_column_name,
+        column_values = default_values,
+    )
+    assert column.column_name == default_column_name
+    assert column.column_values.columns == [default_column_name]
+    assert column.column_values.shape == (3, 1)
+    assert column.column_values.compare(default_values).empty
