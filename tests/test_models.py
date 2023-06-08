@@ -202,42 +202,75 @@ def test_out_of_scope_column_name(column_name):
         column_name = conversion_calculator.models.Column(column_name=column_name)
         assert column_name.column_name_components == column_name_components
 
+
 def test_can_create_column_with_list_column_values():
     default_column_name = "cvlt_sdfr_c"
-    default_values = [0, 1, 2] 
+    default_values = [0, 1, 2]
     column = conversion_calculator.models.Column(
-        column_name = default_column_name,
-        column_values = default_values,
+        column_name=default_column_name,
+        column_values=default_values,
     )
     assert column.column_name == default_column_name
     assert column.column_values.columns == [default_column_name]
     assert column.column_values.shape == (3, 1)
     assert (column.column_values.to_numpy().flatten() == default_values).all()
 
+
 def test_can_create_column_with_pandas_column_values():
     default_column_name = "cvlt_sdfr_c"
-    default_values = pd.DataFrame({default_column_name: [0, 1, 2] })
+    default_values = pd.DataFrame({default_column_name: [0, 1, 2]})
     column = conversion_calculator.models.Column(
-        column_name = default_column_name,
-        column_values = default_values,
+        column_name=default_column_name,
+        column_values=default_values,
     )
     assert column.column_name == default_column_name
     assert column.column_values.columns == [default_column_name]
     assert column.column_values.shape == (3, 1)
     assert column.column_values.compare(default_values).empty
 
+    nan_at_the_end_column_name = "cvlt_sdfr_c"
+    nan_at_the_end_values = pd.DataFrame({nan_at_the_end_column_name: [0, 1, 2, None]})
+    column = conversion_calculator.models.Column(
+        column_name=nan_at_the_end_column_name,
+        column_values=nan_at_the_end_values,
+    )
+    assert column.column_name == nan_at_the_end_column_name
+    assert column.column_values.columns == [nan_at_the_end_column_name]
+    assert column.column_values.shape == (4, 1)
+    assert column.column_values.compare(nan_at_the_end_values).empty
+
+
 def test_can_not_create_column_with_bad_column_values():
     string_column_name = "cvlt_sdfr_c"
-    string_values = pd.DataFrame({string_column_name: ['zero', 'one', 'two'] })
+    string_values = pd.DataFrame({string_column_name: ["zero", "one", "two"]})
     with pytest.raises(ValueError):
         _ = conversion_calculator.models.Column(
-            column_name = string_column_name,
-            column_values = string_values,
+            column_name=string_column_name,
+            column_values=string_values,
         )
+
     leading_nan_column_name = "cvlt_sdfr_c"
-    leading_nan_values = pd.DataFrame({string_column_name: [None, 'one', 'two'] })
+    leading_nan_values = pd.DataFrame({string_column_name: [None, "one", "two"]})
     with pytest.raises(ValueError):
         _ = conversion_calculator.models.Column(
-            column_name = leading_nan_column_name,
-            column_values = leading_nan_values,
+            column_name=leading_nan_column_name,
+            column_values=leading_nan_values,
+        )
+
+    wide_column_name = "cvlt_sdfr_c"
+    wide_values = pd.DataFrame(
+        {string_column_name: [0, 1, 2], "other_column": [0, 1, 2]}
+    )
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.Column(
+            column_name=wide_column_name,
+            column_values=wide_values,
+        )
+
+    missing_column_name = "cvlt_sdfr_c"
+    missing_column_name_values = pd.DataFrame([0, 1, 2])
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.Column(
+            column_name=missing_column_name,
+            column_values=missing_column_name_values,
         )

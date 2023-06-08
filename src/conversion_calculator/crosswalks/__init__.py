@@ -3,8 +3,7 @@ import sys
 
 import numpy as np
 
-from conversion_calculator.models import (CrossWalk, Instrument,
-                                          InstrumentItem, Trial)
+from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, Trial
 
 instrument_cvlt = Instrument(id="cvlt")
 instrument_hvlt = Instrument(id="hvlt")
