@@ -5,7 +5,7 @@ from typing import List, Union
 
 import pandas as pd
 
-from conversion_calculator import crosswalks, models
+from conversion_calculator import crosswalks, models, errors
 
 
 def get_csv_template_as_str() -> str:
@@ -46,20 +46,7 @@ def integer_check(input: Union[int, float]) -> bool:
     return False
 
 
-def convert_values(
-    source_column: models.Column, target_column: models.Column
-) -> Union[List[int], None]:
-    """Given a source column, and a target column, return the converted value."""
-    ...
-    if source_column.column_values is None:
-        raise ValueError("Source column has no values.")
-
-    if target_column.column_values is not None:
-        raise ValueError("Target column already has values.")
-
-    if source_column == target_column:
-        return source_column.column_values.copy()
-
+def find_crosswalk(source_column: models.Column, target_column: models.Column) -> models.CrossWalk:
     crosswalk_to_target = None
     for candidate_crosswalk in [
         obj
@@ -71,9 +58,33 @@ def convert_values(
             or source_column.trial == candidate_crosswalk.source_trial
         ):
             crosswalk_to_target = candidate_crosswalk
-            break
+            break 
 
     if crosswalk_to_target is None:
+        raise errors.CrossWalkNotFound("No crosswalk found for source column to target column.")
+
+    return crosswalk_to_target
+
+
+
+def convert_values(
+    source_column: models.Column, target_column: models.Column
+) -> pd.DataFrame:
+    """Given a source column, and a target column, return the converted value."""
+    ...
+    if source_column.column_values is None or source_column.column_values.empty:
+        raise ValueError("Source column has no values.")
+
+    if target_column.column_values is not None and not target_column.column_values.empty:
+        raise ValueError("Target column already has values.")
+
+    if source_column == target_column:
+        return source_column.column_values
+
+    try:
+        crosswalk_to_target = find_crosswalk(source_column, target_column)
+
+    except errors.CrossWalkNotFound:
         raise ValueError("No crosswalk found for source column.")
 
     converted_column_values = []

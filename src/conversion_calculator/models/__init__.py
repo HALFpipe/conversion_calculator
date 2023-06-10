@@ -143,7 +143,7 @@ class ValueType(BaseModel):
 
 class Column(BaseModel):
     column_name: str
-    column_values: Optional[Union[List[int], pd.DataFrame]]
+    column_values: Optional[Union[None, List[int], pd.DataFrame]] = None
     min_value: Optional[int]
     max_value: Optional[int]
     instrument: Optional[Instrument]
@@ -312,7 +312,7 @@ class Column(BaseModel):
 
         return values
 
-    @validator("column_values", pre=True)
+    @validator("column_values")
     def convert_to_dataframe_or_default(cls, value, values):
         if isinstance(value, pd.DataFrame):
             if value.shape[1] != 1:
@@ -344,7 +344,7 @@ class Column(BaseModel):
                         "Invalid column_values. Expected a list of numeric values."
                     )
             return pd.DataFrame({values["column_name"]: value})
-
+        
         else:
             return pd.DataFrame({values["column_name"]: []})
 
