@@ -31,6 +31,7 @@ tags
 
 # vscode ignores
 # User-specific files
+.vscode
 *.rsuser
 *.suo
 *.user
