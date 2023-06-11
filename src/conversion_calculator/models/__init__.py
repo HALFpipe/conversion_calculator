@@ -344,7 +344,7 @@ class Column(BaseModel):
                         "Invalid column_values. Expected a list of numeric values."
                     )
             return pd.DataFrame({values["column_name"]: value})
-        
+
         else:
             return pd.DataFrame({values["column_name"]: []})
 

@@ -46,7 +46,9 @@ def integer_check(input: Union[int, float]) -> bool:
     return False
 
 
-def find_crosswalk(source_column: models.Column, target_column: models.Column) -> models.CrossWalk:
+def find_crosswalk(
+    source_column: models.Column, target_column: models.Column
+) -> models.CrossWalk:
     crosswalk_to_target = None
     for candidate_crosswalk in [
         obj
@@ -54,27 +56,45 @@ def find_crosswalk(source_column: models.Column, target_column: models.Column) -
         if isinstance(obj, models.CrossWalk)
     ]:
         # the below is already complex enough that future work should implement a better solution.  Decision tree?
-        if source_column.instrument.id == candidate_crosswalk.source_instrument.id and target_column.instrument.id in candidate_crosswalk.column_order:
-
-            if hasattr(source_column, 'instrument_item') and hasattr(source_column, 'instrument_trial'):
-
-                if (source_column.instrument_trial.id == candidate_crosswalk.source_instrument_trial.id) and (source_column.instrument_item.id == candidate_crosswalk.source_instrument_item.id):
-                    crosswalk_to_target = (candidate_crosswalk)
+        if (
+            source_column.instrument.id == candidate_crosswalk.source_instrument.id
+            and target_column.instrument.id in candidate_crosswalk.column_order
+        ):
+            if hasattr(source_column, "instrument_item") and hasattr(
+                source_column, "instrument_trial"
+            ):
+                if (
+                    source_column.instrument_trial.id
+                    == candidate_crosswalk.source_instrument_trial.id
+                ) and (
+                    source_column.instrument_item.id
+                    == candidate_crosswalk.source_instrument_item.id
+                ):
+                    crosswalk_to_target = candidate_crosswalk
                     break
 
-                if (source_column.instrument_trial.id == candidate_crosswalk.source_instrument_trial.id):
-                    crosswalk_to_target = (candidate_crosswalk)
+                if (
+                    source_column.instrument_trial.id
+                    == candidate_crosswalk.source_instrument_trial.id
+                ):
+                    crosswalk_to_target = candidate_crosswalk
                     break
 
-            if hasattr(source_column,'instrument_item') and not hasattr(source_column,'instrument_trial'):
-                if source_column.instrument_item.id == candidate_crosswalk.source_instrument_item.id:
-                    crosswalk_to_target = (candidate_crosswalk)
+            if hasattr(source_column, "instrument_item") and not hasattr(
+                source_column, "instrument_trial"
+            ):
+                if (
+                    source_column.instrument_item.id
+                    == candidate_crosswalk.source_instrument_item.id
+                ):
+                    crosswalk_to_target = candidate_crosswalk
                     break
 
-            raise errors.CrossWalkNotFound("No crosswalk found for source column to target column.")
+            raise errors.CrossWalkNotFound(
+                "No crosswalk found for source column to target column."
+            )
 
     return crosswalk_to_target
-
 
 
 def convert_all_values(
@@ -85,7 +105,10 @@ def convert_all_values(
     if source_column.column_values is None or source_column.column_values.empty:
         raise ValueError("Source column has no values.")
 
-    if target_column.column_values is not None and not target_column.column_values.empty:
+    if (
+        target_column.column_values is not None
+        and not target_column.column_values.empty
+    ):
         raise ValueError("Target column already has values.")
 
     if source_column == target_column:

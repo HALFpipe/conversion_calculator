@@ -37,12 +37,16 @@ def test_convert_all_values_raises_with_nonempty_target_column():
     with pytest.raises(ValueError):
         conversion_calculator.lib.convert_all_values(source_column, target_column)
 
+
 def test_find_crosswalk_when_columns_are_compatible():
     source_column = conversion_calculator.models.Column(
         column_name="cvlt_ldfr_c", column_values=[10]
     )
     target_column = conversion_calculator.models.Column(column_name="hvlt_ldfr_c")
-    assert conversion_calculator.lib.find_crosswalk(source_column, target_column) == conversion_calculator.crosswalks.cvlt_ldrf
+    assert (
+        conversion_calculator.lib.find_crosswalk(source_column, target_column)
+        == conversion_calculator.crosswalks.cvlt_ldrf
+    )
 
 
 def test_convert_all_values_raises_when_no_crosswalk_found():
@@ -54,10 +58,13 @@ def test_convert_all_values_raises_when_no_crosswalk_found():
     with pytest.raises(ValueError):
         conversion_calculator.lib.convert_all_values(source_column, target_column)
 
+
 @pytest.mark.xfail
 def test_convert_all_values_can_crosswalk_columns():
     source_column = conversion_calculator.models.Column(
         column_name="cvlt_ldfr_c", column_values=[10]
     )
     target_column = conversion_calculator.models.Column(column_name="hvlt_ldfr_c")
-    assert conversion_calculator.lib.convert_all_values(source_column, target_column) == [9]
+    assert conversion_calculator.lib.convert_all_values(
+        source_column, target_column
+    ) == [9]
