@@ -53,21 +53,31 @@ def find_crosswalk(source_column: models.Column, target_column: models.Column) -
         for _, obj in inspect.getmembers(crosswalks)
         if isinstance(obj, models.CrossWalk)
     ]:
-        if source_column.instrument == candidate_crosswalk.source_instrument and (
-            source_column.instrument_item == candidate_crosswalk.source_instrument_item
-            or source_column.trial == candidate_crosswalk.source_trial
-        ):
-            crosswalk_to_target = candidate_crosswalk
-            break 
+        # the below is already complex enough that future work should implement a better solution.  Decision tree?
+        if source_column.instrument.id == candidate_crosswalk.source_instrument.id and target_column.instrument.id in candidate_crosswalk.column_order:
 
-    if crosswalk_to_target is None:
-        raise errors.CrossWalkNotFound("No crosswalk found for source column to target column.")
+            if hasattr(source_column, 'instrument_item') and hasattr(source_column, 'instrument_trial'):
+
+                if (source_column.instrument_trial.id == candidate_crosswalk.source_instrument_trial.id) and (source_column.instrument_item.id == candidate_crosswalk.source_instrument_item.id):
+                    crosswalk_to_target = (candidate_crosswalk)
+                    break
+
+                if (source_column.instrument_trial.id == candidate_crosswalk.source_instrument_trial.id):
+                    crosswalk_to_target = (candidate_crosswalk)
+                    break
+
+            if hasattr(source_column,'instrument_item') and not hasattr(source_column,'instrument_trial'):
+                if source_column.instrument_item.id == candidate_crosswalk.source_instrument_item.id:
+                    crosswalk_to_target = (candidate_crosswalk)
+                    break
+
+            raise errors.CrossWalkNotFound("No crosswalk found for source column to target column.")
 
     return crosswalk_to_target
 
 
 
-def convert_values(
+def convert_all_values(
     source_column: models.Column, target_column: models.Column
 ) -> pd.DataFrame:
     """Given a source column, and a target column, return the converted value."""
