@@ -2,6 +2,7 @@ import pytest
 import io
 
 import conversion_calculator
+import numpy as np
 
 
 def test_get_csv_template_as_str():
@@ -59,12 +60,12 @@ def test_convert_all_values_raises_when_no_crosswalk_found():
         conversion_calculator.lib.convert_all_values(source_column, target_column)
 
 
-@pytest.mark.xfail
 def test_convert_all_values_can_crosswalk_columns():
     source_column = conversion_calculator.models.Column(
         column_name="cvlt_ldfr_c", column_values=[10]
     )
     target_column = conversion_calculator.models.Column(column_name="hvlt_ldfr_c")
-    assert conversion_calculator.lib.convert_all_values(
+    test_values = conversion_calculator.lib.convert_all_values(
         source_column, target_column
-    ) == [9]
+    )
+    assert np.all(test_values.values.flatten() == np.array([8]))

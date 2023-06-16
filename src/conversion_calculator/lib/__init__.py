@@ -4,6 +4,7 @@ import io
 from typing import List, Union
 
 import pandas as pd
+import numpy as np
 
 from conversion_calculator import crosswalks, models, errors
 
@@ -121,15 +122,12 @@ def convert_all_values(
         raise ValueError("No crosswalk found for source column.")
 
     converted_column_values = []
-    for column_value in source_column.column_values:
-        target_row = crosswalk_to_target.lookup_table[
-            crosswalk_to_target.lookup_table[
-                :, crosswalk_to_target.column_order[source_column.instrument.id]
-            ]
-            == column_value
-        ].flatten()
-        converted_column_values.append(
-            target_row[crosswalk_to_target.column_order[target_column.instrument.id]]
-        )
+    for source_value_index, source_value in enumerate(source_column.column_values[source_column.column_name]):
+        for crosswalk_index, crosswalk_row in enumerate(crosswalk_to_target.lookup_table):
+            if crosswalk_row[crosswalk_to_target.column_order[source_column.instrument.id]] == source_value:
+                converted_column_values.append(
+                    crosswalk_row[crosswalk_to_target.column_order[target_column.instrument.id]]
+                )
+                break
 
-    return converted_column_values
+    return pd.DataFrame({target_column.column_name: converted_column_values})
