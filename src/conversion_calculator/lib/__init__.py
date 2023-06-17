@@ -151,7 +151,7 @@ def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
     for column in input_data.columns:
         try:
             valid_columns.append(
-                conversion_calculator.models.Column(
+                models.Column(
                     column_name=column, column_values=input_data[column]
                 )
             )
@@ -159,3 +159,11 @@ def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
             # this is how we ignore columns that don't validate
             # when we have more error conditions than just Valid or Not, add them here so we can tell users what's wrong
             pass
+
+    for source_column, target_column in permutations(valid_columns, 2):
+        try:
+            convert_all_values(source_column, target_column)
+        except ValueError:
+            pass
+    
+    return input_data
