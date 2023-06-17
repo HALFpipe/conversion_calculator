@@ -1,8 +1,8 @@
 import re
 from typing import Dict, List, Optional, Union
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 from pydantic import BaseModel, root_validator, validator
 
 __all__ = [
@@ -143,7 +143,7 @@ class ValueType(BaseModel):
 
 class Column(BaseModel):
     column_name: str
-    column_values: Optional[Union[None, List[int], pd.DataFrame]] = None
+    column_values: Optional[Union[None, List[int], pd.Series, pd.DataFrame]] = None
     min_value: Optional[int]
     max_value: Optional[int]
     instrument: Optional[Instrument]
@@ -314,7 +314,10 @@ class Column(BaseModel):
 
     @validator("column_values")
     def convert_to_dataframe_or_default(cls, value, values):
-        if isinstance(value, pd.DataFrame):
+        if isinstance(value, pd.DataFrame) or isinstance(value, pd.Series):
+            if isinstance(value, pd.Series):
+                value = value.to_frame()
+
             if value.shape[1] != 1:
                 raise ValueError(
                     "Invalid column_values. Expected a single column dataframe."

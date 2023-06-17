@@ -1,12 +1,14 @@
 import importlib.resources as pkg_resources
 import inspect
 import io
+from itertools import permutations
 from typing import List, Union
 
-import pandas as pd
 import numpy as np
+import pandas as pd
+from pydantic import ValidationError
 
-from conversion_calculator import crosswalks, models, errors
+from conversion_calculator import crosswalks, errors, models
 
 
 def get_csv_template_as_str() -> str:
@@ -122,12 +124,38 @@ def convert_all_values(
         raise ValueError("No crosswalk found for source column.")
 
     converted_column_values = []
-    for source_value_index, source_value in enumerate(source_column.column_values[source_column.column_name]):
-        for crosswalk_index, crosswalk_row in enumerate(crosswalk_to_target.lookup_table):
-            if crosswalk_row[crosswalk_to_target.column_order[source_column.instrument.id]] == source_value:
+    for source_value_index, source_value in enumerate(
+        source_column.column_values[source_column.column_name]
+    ):
+        for crosswalk_index, crosswalk_row in enumerate(
+            crosswalk_to_target.lookup_table
+        ):
+            if (
+                crosswalk_row[
+                    crosswalk_to_target.column_order[source_column.instrument.id]
+                ]
+                == source_value
+            ):
                 converted_column_values.append(
-                    crosswalk_row[crosswalk_to_target.column_order[target_column.instrument.id]]
+                    crosswalk_row[
+                        crosswalk_to_target.column_order[target_column.instrument.id]
+                    ]
                 )
                 break
 
     return pd.DataFrame({target_column.column_name: converted_column_values})
+
+
+def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
+    valid_columns = []
+    for column in input_data.columns:
+        try:
+            valid_columns.append(
+                conversion_calculator.models.Column(
+                    column_name=column, column_values=input_data[column]
+                )
+            )
+        except ValidationError:
+            # this is how we ignore columns that don't validate
+            # when we have more error conditions than just Valid or Not, add them here so we can tell users what's wrong
+            pass

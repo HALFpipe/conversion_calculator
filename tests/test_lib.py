@@ -1,8 +1,9 @@
-import pytest
 import io
 
-import conversion_calculator
 import numpy as np
+import pytest
+
+import conversion_calculator
 
 
 def test_get_csv_template_as_str():
@@ -69,3 +70,14 @@ def test_convert_all_values_can_crosswalk_columns():
         source_column, target_column
     )
     assert np.all(test_values.values.flatten() == np.array([8]))
+
+
+# def test_convert_all_values_will_return_source_values_when_source_and_target_are_the_same():
+#    source_column = conversion_calculator.models.Column(
+#        column_name="cvlt_ldfr_c", column_values=[10]
+#    )
+#    target_column = conversion_calculator.models.Column(column_name="cvlt_ldfr_c")
+#    test_values = conversion_calculator.lib.convert_all_values(
+#        source_column, target_column
+#    )
+#    assert test_values
