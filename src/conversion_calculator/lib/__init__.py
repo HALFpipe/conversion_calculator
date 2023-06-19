@@ -34,6 +34,11 @@ def parse_input_csv(input: str) -> pd.DataFrame:
     return pd.read_csv(input, on_bad_lines="error")
 
 
+def dataframe_to_csv(dataframe: pd.DataFrame) -> str:
+    """Convert a pandas DataFrame to a CSV string."""
+    return dataframe.to_csv(index=False)
+
+
 def integer_check(input: Union[int, float]) -> bool:
     """Check if the input is an integer."""
     if isinstance(input, int):
