@@ -1,51 +1,51 @@
-import pandas as pd
+import conversion_calculator
 import shinyswatch
-from shiny import App, render, ui
+from shiny import App, render, ui, reactive
 
-app_ui = ui.page_navbar(
-    # Available themes:
-    #  cerulean, cosmo, cyborg, darkly, flatly, journal, litera, lumen, lux,
-    #  materia, minty, morph, pulse, quartz, sandstone, simplex, sketchy, slate,
-    #  solar, spacelab, superhero, united, vapor, yeti, zephyr
-    # shinyswatch.theme.pulse(),
-    shinyswatch.theme.superhero(),
-    ui.nav(
-        "",
-        ui.layout_sidebar(
-            ui.panel_sidebar(
-                ui.input_file("file", "File input:"),
-                ui.tags.h5("Upload file"),
-                ui.input_action_button("action", "Upload", class_="btn-primary"),
-            ),
-            ui.panel_main(
-                ui.navset_tab(
-                    ui.nav(
-                        "Tab 1",
-                        ui.tags.h4("Table"),
-                        ui.output_table("table"),
-                        ui.tags.h4("Verbatim text output"),
-                        ui.output_text_verbatim("txtout"),
-                        ui.tags.h1("Header 1"),
-                        ui.tags.h2("Header 2"),
-                        ui.tags.h3("Header 3"),
-                        ui.tags.h4("Header 4"),
-                        ui.tags.h5("Header 5"),
-                    ),
-                    ui.nav("Tab 2"),
-                    ui.nav("Tab 3"),
-                )
-            ),
+
+def ui_card(title, *args):
+    return (
+        ui.div(
+            {"class": "card mb-4"},
+            ui.div(title, class_="card-header"),
+            ui.div({"class": "card-body"}, *args),
         ),
+    )
+
+
+app_ui = ui.page_fluid(
+    shinyswatch.theme.superhero(),
+    ui_card(
+        "Download the verbal learning template",
+        ui.download_button("verbal_learning_download_button", "Download CSV"),
+    ),
+    ui_panel_conditional(
+        "download_converted_csv", "input.csv_convert",
+        ui.download_button("csv_convert", "Download CSV"),
+    ),
+    ui_card(
+        "Convert a complete verbal learning template",
+        ui.input_file("csv_convert", "File input:"),
     ),
     title="Conversion Calculator",
 )
 
 
 def server(input, output, session):
-    @output
-    @render.text
-    def txt():
-        return f"n*2 is {input.n() * 2}"
+    MAX_FILE_SIZE = 1000000
+
+    @session.download()
+    def verbal_learning_download_button():
+        return conversion_calculator.lib.get_csv_template_path()
+
+    @session.download()
+    def csv_convert(input_csv):
+        if not input_csv:
+            return
+
+        input_df = conversion_calculator.lib.parse_input_csv(input_csv)
+        converted_df = conversion_calculator.lib.convert_spreadsheet(input_df)
+        return conversion_calculator.lib.dataframe_to_csv(converted_df)
 
 
 app = App(app_ui, server)

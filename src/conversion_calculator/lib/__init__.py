@@ -11,13 +11,17 @@ from pydantic import ValidationError
 from conversion_calculator import crosswalks, errors, models
 
 
-def get_csv_template_as_str() -> str:
-    """Return the CSV template as a string."""
-    template_csv_path = str(
+def get_csv_template_path() -> str:
+    return str(
         pkg_resources.files("conversion_calculator").joinpath(
             "static", "verbal-learning-template.csv"
         )
     )
+
+
+def get_csv_template_as_str() -> str:
+    """Return the CSV template as a string."""
+    template_csv_path = get_csv_template_path()
     with open(template_csv_path, "r") as f:
         csv_template = f.read()
     return csv_template
@@ -156,9 +160,7 @@ def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
     for column in input_data.columns:
         try:
             valid_columns.append(
-                models.Column(
-                    column_name=column, column_values=input_data[column]
-                )
+                models.Column(column_name=column, column_values=input_data[column])
             )
         except ValidationError:
             # this is how we ignore columns that don't validate
@@ -170,5 +172,5 @@ def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
             convert_all_values(source_column, target_column)
         except ValueError:
             pass
-    
+
     return input_data
