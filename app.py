@@ -36,8 +36,11 @@ def server(input, output, session):
         if len(file_infos) > 1:
             return
 
-        input_df = conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath'])
-        converted_df = conversion_calculator.lib.convert_spreadsheet(input_df)
-        return io.BytesIO(conversion_calculator.lib.dataframe_to_csv(converted_df).encode('utf-8'))
+        try:
+            input_df = conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath'])
+            converted_df = conversion_calculator.lib.convert_spreadsheet(input_df)
+            return io.BytesIO(conversion_calculator.lib.dataframe_to_csv(converted_df).encode('utf-8'))
+        except Exception as e:
+            return None
 
 app = App(app_ui, server)

@@ -7,6 +7,9 @@ readme = "README.md"
 packages = [{include = "conversion_calculator", from = "src"}]
 include = ["src/conversion_calculator/static/*"]
 
+[tool.poetry.scripts]
+conversion-calculator = {callable = "conversion_calculator.cli:main", extras = ["cli"]}
+
 [tool.poetry.dependencies]
 python = "^3.9"
 shiny = "^0.3.3"
@@ -16,6 +19,8 @@ shinyswatch = "^0.2.3"
 pydantic = "^1.10.8"
 loguru = "^0.7.0"
 jinja2 = "^3.1.2"
+shinywidgets = "^0.2.1"
+typer = {extras = ["all"], version = "^0.9.0", optional = true}
 
 [tool.poetry.group.dev.dependencies]
 ipython = "^8.13.2"
@@ -23,6 +28,9 @@ pytest = "^7.3.1"
 isort = "^5.12.0"
 coverage = "^7.2.7"
 pytest-cov = "^4.1.0"
+
+[tool.poetry.extras]
+cli = ["typer"]
 
 [build-system]
 requires = ["poetry-core"]
