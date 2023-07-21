@@ -117,10 +117,7 @@ def convert_all_values(
     if source_column.column_values is None or source_column.column_values.empty:
         raise ValueError("Source column has no values.")
 
-    if (
-        target_column.column_values is not None
-        and not target_column.column_values.empty
-    ):
+    if (not target_column.column_values.isna().values.all()):
         raise ValueError("Target column already has values.")
 
     if source_column == target_column:
@@ -166,11 +163,15 @@ def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
             # this is how we ignore columns that don't validate
             # when we have more error conditions than just Valid or Not, add them here so we can tell users what's wrong
             pass
-
+    
+    if valid_columns == []:
+        raise ValueError("No valid columns found in input data.")
+    
     for source_column, target_column in permutations(valid_columns, 2):
         try:
-            convert_all_values(source_column, target_column)
-        except ValueError:
+            input_data[target_column.column_name] = convert_all_values(source_column, target_column).values
+        except ValueError as e:
+            print(f"Error converting {source_column.column_name} to {target_column.column_name}: {e}")
             pass
 
     return input_data
