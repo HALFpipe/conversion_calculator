@@ -50,8 +50,7 @@ def server(input, output, session):
         try:
 #            input_df = conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath'])
 #            converted_df = conversion_calculator.lib.convert_spreadsheet(input_df)
-             retval = io.BytesIO(conversion_calculator.lib.dataframe_to_csv(run_conversion()).encode('utf-8'))
-             print(retval)
+             return io.BytesIO(conversion_calculator.lib.dataframe_to_csv(run_conversion()).encode('utf-8'))
         except Exception as e:
             return io.BytesIO(str(e).encode('utf-8'))
 
