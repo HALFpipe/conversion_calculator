@@ -161,7 +161,7 @@ class Column(BaseModel):
         COLUMN_TITLE_REGEX = r"^(cvlt|cvltc|ravlt|hvlt)_([a-z_0-9])+$"
 
         column_name = values.get("column_name")
-        
+
         if values.get("column_values") is None:
             values["column_values"] = pd.DataFrame({column_name: []})
 

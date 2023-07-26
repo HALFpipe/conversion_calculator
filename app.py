@@ -13,6 +13,7 @@ app_ui = ui.page_fluid(
     ui.download_button("download_conversion", "Download Conversion"),
 )
 
+
 def server(input, output, session):
     MAX_SIZE = 50000
 
@@ -29,14 +30,16 @@ def server(input, output, session):
 
         if len(file_infos) > 1:
             return
-        
-        return conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath'])
-    
+
+        return conversion_calculator.lib.parse_input_csv(file_infos[0]["datapath"])
+
     # the following, from here to the end of the server function, doesn't work; it's the part of this which actually does the conversion
     @reactive.Calc
     def run_conversion():
-        file_infos = input.file1() 
-        return conversion_calculator.lib.convert_spreadsheet(conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath']))
+        file_infos = input.file1()
+        return conversion_calculator.lib.convert_spreadsheet(
+            conversion_calculator.lib.parse_input_csv(file_infos[0]["datapath"])
+        )
 
     @session.download(filename="converted.csv")
     def download_conversion():
@@ -48,10 +51,15 @@ def server(input, output, session):
             return
 
         try:
-#            input_df = conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath'])
-#            converted_df = conversion_calculator.lib.convert_spreadsheet(input_df)
-             return io.BytesIO(conversion_calculator.lib.dataframe_to_csv(run_conversion()).encode('utf-8'))
+            #            input_df = conversion_calculator.lib.parse_input_csv(file_infos[0]['datapath'])
+            #            converted_df = conversion_calculator.lib.convert_spreadsheet(input_df)
+            return io.BytesIO(
+                conversion_calculator.lib.dataframe_to_csv(run_conversion()).encode(
+                    "utf-8"
+                )
+            )
         except Exception as e:
-            return io.BytesIO(str(e).encode('utf-8'))
+            return io.BytesIO(str(e).encode("utf-8"))
+
 
 app = App(app_ui, server)

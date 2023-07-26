@@ -70,3 +70,37 @@ def test_convert_all_values_can_crosswalk_columns():
         source_column, target_column
     )
     assert np.all(test_values.values.flatten() == np.array([8]))
+
+
+def test_find_crosswalk_raises_when_instrument_items_are_not_the_same():
+    with pytest.raises(conversion_calculator.errors.CrossWalkNotFound):
+        conversion_calculator.lib.find_crosswalk(
+            conversion_calculator.models.Column(column_name="cvlt_ldfr_t1_c"),
+            conversion_calculator.models.Column(column_name="ravlt_sdfr_t1_c"),
+        )
+
+    with pytest.raises(conversion_calculator.errors.CrossWalkNotFound):
+        conversion_calculator.lib.find_crosswalk(
+            conversion_calculator.models.Column(column_name="cvlt_ldfr_c"),
+            conversion_calculator.models.Column(column_name="ravlt_sdfr_c"),
+        )
+
+    with pytest.raises(conversion_calculator.errors.CrossWalkNotFound):
+        conversion_calculator.lib.find_crosswalk(
+            conversion_calculator.models.Column(column_name="cvlt_ldfr_t3_c"),
+            conversion_calculator.models.Column(column_name="ravlt_sdfr_c"),
+        )
+
+
+def test_find_crosswalk_raises_when_instrument_items_are_the_same_but_trials_are_different():
+    with pytest.raises(conversion_calculator.errors.CrossWalkNotFound):
+        conversion_calculator.lib.find_crosswalk(
+            conversion_calculator.models.Column(column_name="cvlt_ldfr_t3_c"),
+            conversion_calculator.models.Column(column_name="ravlt_ldfr_t1_c"),
+        )
+
+    with pytest.raises(conversion_calculator.errors.CrossWalkNotFound):
+        conversion_calculator.lib.find_crosswalk(
+            conversion_calculator.models.Column(column_name="cvlt_ldfr_c"),
+            conversion_calculator.models.Column(column_name="ravlt_ldfr_t1_c"),
+        )

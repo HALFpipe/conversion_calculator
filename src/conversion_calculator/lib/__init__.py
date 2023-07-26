@@ -62,12 +62,55 @@ def find_crosswalk(
     source_column: models.Column, target_column: models.Column
 ) -> models.CrossWalk:
     crosswalk_to_target = None
+
+    # the below is already complex enough that future work should implement a better solution.  Decision tree?
+
+    # only search for a crosswalk if the source and target instrument items and trials are defined and the same
+    common_fields = []
+    if (source_column.instrument_item and target_column.instrument_item) and (
+        source_column.instrument_item.id == target_column.instrument_item.id
+    ):
+        common_fields.append("instrument_item")
+
+        if (source_column.trial and target_column.trial) and (
+            source_column.trial.id == target_column.trial.id
+        ):
+            common_fields.append("trial")
+        elif (source_column.trial and target_column.trial) and (
+            source_column.trial.id != target_column.trial.id
+        ):
+            raise errors.CrossWalkNotFound()
+        elif (source_column.trial or target_column.trial) and not (
+            source_column.trial and target_column.trial
+        ):
+            raise errors.CrossWalkNotFound()
+
+    elif (source_column.instrument_item and target_column.instrument_item) and (
+        source_column.instrument_item.id != target_column.instrument_item.id
+    ):
+        raise errors.CrossWalkNotFound()
+
+    elif (source_column.instrument_item or target_column.instrument_item) and not (
+        source_column.instrument_item and target_column.instrument_item
+    ):
+        raise errors.CrossWalkNotFound()
+
+    else:
+        raise errors.CrossWalkNotFound()
+
+    # if we've reached this point, we should spend the effort to find a crosswalk
     for candidate_crosswalk in [
         obj
         for _, obj in inspect.getmembers(crosswalks)
         if isinstance(obj, models.CrossWalk)
     ]:
-        # the below is already complex enough that future work should implement a better solution.  Decision tree?
+        for field in common_fields:
+            if (
+                getattr(source_column, field).id
+                != getattr(candidate_crosswalk, f"source_{field}").id
+            ):
+                break
+
         if (
             source_column.instrument.id == candidate_crosswalk.source_instrument.id
             and target_column.instrument.id in candidate_crosswalk.column_order
@@ -102,9 +145,7 @@ def find_crosswalk(
                     crosswalk_to_target = candidate_crosswalk
                     break
 
-            raise errors.CrossWalkNotFound(
-                "No crosswalk found for source column to target column."
-            )
+            raise errors.CrossWalkNotFound()
 
     return crosswalk_to_target
 
@@ -117,7 +158,7 @@ def convert_all_values(
     if source_column.column_values is None or source_column.column_values.empty:
         raise ValueError("Source column has no values.")
 
-    if (not target_column.column_values.isna().values.all()):
+    if not target_column.column_values.isna().values.all():
         raise ValueError("Target column already has values.")
 
     if source_column == target_column:
@@ -163,15 +204,19 @@ def convert_spreadsheet(input_data: pd.DataFrame) -> pd.DataFrame:
             # this is how we ignore columns that don't validate
             # when we have more error conditions than just Valid or Not, add them here so we can tell users what's wrong
             pass
-    
+
     if valid_columns == []:
         raise ValueError("No valid columns found in input data.")
-    
+
     for source_column, target_column in permutations(valid_columns, 2):
         try:
-            input_data[target_column.column_name] = convert_all_values(source_column, target_column).values
+            input_data[target_column.column_name] = convert_all_values(
+                source_column, target_column
+            ).values
         except ValueError as e:
-            print(f"Error converting {source_column.column_name} to {target_column.column_name}: {e}")
+            print(
+                f"Error converting {source_column.column_name} to {target_column.column_name}: {e}"
+            )
             pass
 
     return input_data
