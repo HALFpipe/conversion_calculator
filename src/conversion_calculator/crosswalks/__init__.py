@@ -1,6 +1,3 @@
-import inspect
-import sys
-
 import numpy as np
 
 from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, Trial

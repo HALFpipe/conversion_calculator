@@ -1,7 +1,9 @@
-import typer
 import pathlib
-import conversion_calculator
+
+import typer
 from typing_extensions import Annotated
+
+import conversion_calculator
 
 app = typer.Typer()
 

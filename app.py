@@ -1,9 +1,10 @@
-import conversion_calculator
 import io
-import shinyswatch
-from shiny import App, render, ui, reactive
 from typing import List
 
+import shinyswatch
+from shiny import App, reactive, render, ui
+
+import conversion_calculator
 
 app_ui = ui.page_fluid(
     shinyswatch.theme.superhero(),
