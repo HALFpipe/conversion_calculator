@@ -13,8 +13,8 @@ instrument_trial_t1 = Trial(id="t1")
 instrument_trial_t15 = Trial(id="t15")
 
 cvlt_ldrf = CrossWalk(
-    source_instrument=instrument_cvlt,
-    source_instrument_item=instrument_item_ldfr,
+    instrument=instrument_cvlt,
+    instrument_item=instrument_item_ldfr,
     column_order={"cvlt": 0, "ravlt": 1, "hvlt": 2},
     lookup_table=np.array(
         [
@@ -40,8 +40,8 @@ cvlt_ldrf = CrossWalk(
 )
 
 cvlt_sdfr = CrossWalk(
-    source_instrument=instrument_cvlt,
-    source_instrument_item=instrument_item_sdfr,
+    instrument=instrument_cvlt,
+    instrument_item=instrument_item_sdfr,
     column_order={
         "cvlt": 0,
         "ravlt": 1,
@@ -70,8 +70,8 @@ cvlt_sdfr = CrossWalk(
 )
 
 cvlt_t1 = CrossWalk(
-    source_instrument=instrument_cvlt,
-    source_trial=instrument_trial_t1,
+    instrument=instrument_cvlt,
+    trial=instrument_trial_t1,
     column_order={
         "cvlt": 0,
         "ravlt": 1,
@@ -101,8 +101,8 @@ cvlt_t1 = CrossWalk(
 )
 
 cvlt_t15 = CrossWalk(
-    source_instrument=instrument_cvlt,
-    source_trial=instrument_trial_t15,
+    instrument=instrument_cvlt,
+    trial=instrument_trial_t15,
     column_order={
         "cvlt": 0,
         "ravlt": 1,
@@ -196,8 +196,8 @@ cvlt_t15 = CrossWalk(
 )
 
 hvlt_ldfr = CrossWalk(
-    source_instrument=instrument_hvlt,
-    source_instrument_item=instrument_item_ldfr,
+    instrument=instrument_hvlt,
+    instrument_item=instrument_item_ldfr,
     column_order={
         "hvlt": 0,
         "cvlt": 1,
@@ -223,8 +223,8 @@ hvlt_ldfr = CrossWalk(
 )
 
 hvlt_t1 = CrossWalk(
-    source_instrument=instrument_hvlt,
-    source_trial=instrument_trial_t1,
+    instrument=instrument_hvlt,
+    trial=instrument_trial_t1,
     column_order={
         "hvlt": 0,
         "cvlt": 1,
@@ -250,8 +250,8 @@ hvlt_t1 = CrossWalk(
 )
 
 hvlt_t15 = CrossWalk(
-    source_instrument=instrument_hvlt,
-    source_trial=instrument_trial_t15,
+    instrument=instrument_hvlt,
+    trial=instrument_trial_t15,
     column_order={
         "hvlt": 0,
         "cvlt": 1,
@@ -301,8 +301,8 @@ hvlt_t15 = CrossWalk(
 )
 
 ravlt_ldfr = CrossWalk(
-    source_instrument=instrument_ravlt,
-    source_instrument_item=instrument_item_ldfr,
+    instrument=instrument_ravlt,
+    instrument_item=instrument_item_ldfr,
     column_order={
         "ravlt": 0,
         "havlt": 1,
@@ -331,8 +331,8 @@ ravlt_ldfr = CrossWalk(
 )
 
 ravlt_sdfr = CrossWalk(
-    source_instrument=instrument_ravlt,
-    source_instrument_item=instrument_item_sdfr,
+    instrument=instrument_ravlt,
+    instrument_item=instrument_item_sdfr,
     column_order={
         "ravlt": 0,
         "cvlt": 1,
@@ -361,8 +361,8 @@ ravlt_sdfr = CrossWalk(
 )
 
 ravlt_t1 = CrossWalk(
-    source_instrument=instrument_ravlt,
-    source_trial=instrument_trial_t1,
+    instrument=instrument_ravlt,
+    trial=instrument_trial_t1,
     column_order={
         "ravlt": 0,
         "havlt": 1,
@@ -391,8 +391,8 @@ ravlt_t1 = CrossWalk(
 )
 
 ravlt_t15 = CrossWalk(
-    source_instrument=instrument_ravlt,
-    source_trial=instrument_trial_t15,
+    instrument=instrument_ravlt,
+    trial=instrument_trial_t15,
     column_order={
         "ravlt": 0,
         "havlt": 1,

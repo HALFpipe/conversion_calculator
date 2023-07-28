@@ -4,7 +4,7 @@ from pydantic import BaseModel, root_validator
 
 
 class Instrument(BaseModel):
-    id: str
+    id: str = None
 
     @root_validator
     def validate_instrument(cls, values):

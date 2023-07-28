@@ -1,5 +1,6 @@
 import pandas as pd
 import pytest
+from pydantic import ValidationError
 
 import conversion_calculator.models
 
@@ -12,11 +13,16 @@ import conversion_calculator.models
         ("ravlt", "Rey Auditory Verbal Learning Test"),
         ("hvlt", "Hopkins Verbal Learning Test"),
         ("invalid_id", None),
+        ("", None),
+        (None, None),
     ],
 )
 def test_instrument(id, friendly_name):
-    if id == "invalid_id":
+    if id == "invalid_id" or id == "":
         with pytest.raises(ValueError):
+            _ = conversion_calculator.models.Instrument(id=id)
+    elif id == None:
+        with pytest.raises(ValidationError):
             _ = conversion_calculator.models.Instrument(id=id)
     else:
         instrument = conversion_calculator.models.Instrument(id=id)
