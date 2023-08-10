@@ -32,8 +32,11 @@ class CrossWalk(BaseModel):
     def check_instrument_item_match(self, column: Column) -> bool:
         # check if the crosswalk and column have the same instrument item, or are both None
         if (column.instrument_item and self.instrument_item) and (
-            (column.instrument_item == self.instrument_item) or
-            (column.instrument_item.id in ['dr', 'ldfr'] and self.instrument_item.id in ['dr', 'ldfr'])
+            (column.instrument_item == self.instrument_item)
+            or (
+                column.instrument_item.id in ["dr", "ldfr"]
+                and self.instrument_item.id in ["dr", "ldfr"]
+            )
         ):
             return True
 

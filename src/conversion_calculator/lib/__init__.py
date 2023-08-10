@@ -98,9 +98,7 @@ def convert_all_values(
     for _, source_value in enumerate(
         source_column.column_values[source_column.column_name]
     ):
-        for _, crosswalk_row in enumerate(
-            crosswalk_to_target.lookup_table
-        ):
+        for _, crosswalk_row in enumerate(crosswalk_to_target.lookup_table):
             if (
                 crosswalk_row[
                     crosswalk_to_target.column_order[source_column.instrument.id]
