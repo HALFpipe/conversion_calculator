@@ -1408,12 +1408,12 @@ jupyter = ["ipywidgets (>=7.5.1,<9)"]
 
 [[package]]
 name = "rule-engine"
-version = "4.0.0"
+version = "4.1.0"
 description = "A lightweight, optionally typed expression language with a custom grammar for matching arbitrary Python objects."
 optional = false
 python-versions = "*"
 files = [
-    {file = "rule-engine-4.0.0.tar.gz", hash = "sha256:bb4e436305e60bb34f53e8a26a6e70e3d8af3f6ad63ceb03d056d6da697ed970"},
+    {file = "rule-engine-4.1.0.tar.gz", hash = "sha256:ef00ad79a935be3d7932889d4752e381efd7070d5d0a6fc97f09418557dbfdea"},
 ]
 
 [package.dependencies]
@@ -1836,4 +1836,4 @@ cli = ["typer"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "868680431cbccf18b25d2abf0253b50ea1957483566425e3c8c54b50c4b6fe9d"
+content-hash = "888d378579a9fc53cb0422c133d328d48819b4b73e43391467b6df4005de5c47"
