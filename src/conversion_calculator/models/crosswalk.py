@@ -33,7 +33,7 @@ class CrossWalk(BaseModel):
         if self.rules:
             rule_results = []
             for rule in self.rules:
-                rule_results.append(rule(source_column, target_column))
+                rule_results.append(rule(self, target_column))
             return all(rule_results)
 
         return False
