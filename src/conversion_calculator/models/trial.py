@@ -1,10 +1,12 @@
 import re
+from typing import Optional
 
 from pydantic import BaseModel, root_validator
 
 
 class Trial(BaseModel):
     id: str
+    alias: Optional[str] = None
 
     @root_validator
     def validate_trial(cls, values):
