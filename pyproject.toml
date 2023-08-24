@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "conversion-calculator"
-version = "0.1.0"
+version = "0.2.0"
 description = "A Python Shiny application that provides functions necessary to convert verbal learning scores."
 authors = ["Jason A. Staph <jstaph@staph.us>"]
 readme = "README.md"
