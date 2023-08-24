@@ -3,11 +3,11 @@ import numpy as np
 from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem
 
 instrument_cvlt = Instrument(id="cvlt")
-instrument_item_ldfr = InstrumentItem(id="ldfr")
+instrument_item_imfr = InstrumentItem(id="imfr")
 
-cvlt_ldrf = CrossWalk(
+cvlt_imfr = CrossWalk(
     instrument=instrument_cvlt,
-    instrument_item=instrument_item_ldfr,
+    instrument_item=instrument_item_imfr,
     column_order={"cvlt": 0, "ravlt": 1, "hvlt": 2},
     lookup_table=np.array(
         [

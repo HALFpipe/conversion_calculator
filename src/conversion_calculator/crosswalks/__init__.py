@@ -2,8 +2,8 @@ import numpy as np
 
 from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, Trial
 
-from .cvlt_ldrf import cvlt_ldrf
-from .cvlt_sdrf import cvlt_sdfr
+from .cvlt_ldfr import cvlt_ldfr
+from .cvlt_sdfr import cvlt_sdfr
 from .cvlt_summary import cvlt_t15
 from .cvlt_trial import cvlt_t1, cvlt_t2, cvlt_t3, cvlt_t4, cvlt_t5, cvlt_imfr_t1, cvlt_imfr_t2, cvlt_imfr_t3, cvlt_imfr_t4, cvlt_imfr_t5
 from .hvlt_ldfr import hvlt_ldfr
@@ -48,7 +48,7 @@ __all__ = [
     ravlt_imfr_t4,
     ravlt_imfr_t5,
     ravlt_t15,
-    cvlt_ldrf,
+    cvlt_ldfr,
     cvlt_sdfr,
     hvlt_ldfr,
     ravlt_ldfr,

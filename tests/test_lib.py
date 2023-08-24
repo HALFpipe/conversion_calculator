@@ -47,7 +47,7 @@ def test_find_crosswalk_when_columns_are_compatible():
     target_column = conversion_calculator.models.Column(column_name="hvlt_ldfr_c")
     assert (
         conversion_calculator.lib.find_crosswalk(source_column, target_column)
-        == conversion_calculator.crosswalks.cvlt_ldrf
+        == conversion_calculator.crosswalks.cvlt_ldfr
     )
 
 
