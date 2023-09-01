@@ -6,16 +6,8 @@ instrument_hvlt = Instrument(id="hvlt")
 
 instrument_item_ldfr = InstrumentItem(id="ldfr")
 
-
-hvlt_ldfr = CrossWalk(
-    instrument=instrument_hvlt,
-    instrument_item=instrument_item_ldfr,
-    column_order={
-        "hvlt": 0,
-        "cvlt": 1,
-        "ravlt": 2,
-    },
-    lookup_table=np.array(
+hvlt_ldfr_column_order = {"hvlt": 0, "cvlt": 1, "ravlt": 2}
+hvlt_ldfr_lookup_table = np.array(
         [
             [0, 0, 0],
             [1, 0, 0],
@@ -30,6 +22,11 @@ hvlt_ldfr = CrossWalk(
             [10, 13, 12],
             [11, 15, 13],
             [12, 16, 14],
-        ]
-    ),
+        ])
+
+hvlt_ldfr = CrossWalk(
+    instrument=instrument_hvlt,
+    instrument_item=instrument_item_ldfr,
+    column_order=hvlt_ldfr_column_order,
+    lookup_table=hvlt_ldfr_lookup_table,
 )
