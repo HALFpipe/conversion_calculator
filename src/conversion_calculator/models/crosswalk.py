@@ -3,6 +3,7 @@ from typing import Dict, Optional
 import numpy as np
 from pydantic import BaseModel, validator
 
+from ..models import ValueBounds
 from .column import Column
 from .instrument import Instrument
 from .instrumentitem import InstrumentItem
@@ -15,6 +16,7 @@ class CrossWalk(BaseModel):
     instrument: Instrument
     instrument_item: Optional[InstrumentItem] = None
     trial: Optional[Trial] = None
+    value_bounds: Optional[ValueBounds] = None
 
     class Config:
         arbitrary_types_allowed = True

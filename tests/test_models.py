@@ -280,3 +280,18 @@ def test_can_not_create_column_with_bad_column_values():
             column_name=missing_column_name,
             column_values=missing_column_name_values,
         )
+
+
+def test_bounds_raise_with_min_lt_0():
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.bounds.ValueBounds(min_value=-1, max_value=1)
+
+
+def test_bounds_raise_with_max_eq_0():
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.bounds.ValueBounds(min_value=0, max_value=0)
+
+
+def test_bounds_raise_with_min_eq_max():
+    with pytest.raises(ValueError):
+        _ = conversion_calculator.models.bounds.ValueBounds(min_value=1, max_value=1)

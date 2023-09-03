@@ -1,6 +1,7 @@
 import numpy as np
 
-from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, Trial
+from conversion_calculator.models import (CrossWalk, Instrument,
+                                          InstrumentItem, Trial)
 
 instrument_ravlt = Instrument(id="ravlt")
 instrument_ravlt_immediate_recall = InstrumentItem(id="imfr")

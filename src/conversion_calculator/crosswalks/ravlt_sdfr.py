@@ -5,8 +5,8 @@ from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem
 instrument_ravlt = Instrument(id="ravlt")
 
 instrument_item_sdfr = InstrumentItem(id="sdfr")
-instrument_ravlt_column_order = {"ravlt": 0, "cvlt": 1}
-instrument_ravlt_lookup_table = np.array(
+ravlt_sdfr_column_order = {"ravlt": 0, "cvlt": 1}
+ravlt_sdfr_lookup_table = np.array(
     [
         [0, 0],
         [0, 0],
@@ -31,6 +31,6 @@ instrument_ravlt_lookup_table = np.array(
 ravlt_sdfr = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_item_sdfr,
-    column_order=instrument_ravlt_column_order,
-    lookup_table=instrument_ravlt_lookup_table,
+    column_order=ravlt_sdfr_column_order,
+    lookup_table=ravlt_sdfr_lookup_table,
 )
