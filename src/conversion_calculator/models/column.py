@@ -25,6 +25,7 @@ class Column(BaseModel):
 
     class Config:
         arbitrary_types_allowed = True
+        validate_assignment = True
 
     @root_validator
     def validate_column_name(cls, values):

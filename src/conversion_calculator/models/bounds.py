@@ -104,6 +104,7 @@ max_values = {
     "ravlt_imfr_b_i": 16,
     "ravlt_sdfr_i": 16,
     "ravlt_ldfr_i": 15,
+    "ravlt_ldfr_c": 15,
     "ravlt_recog_hits": 36,
     "hvlt_version": 12,
     "hvlt_imfr_t1_c": 12,

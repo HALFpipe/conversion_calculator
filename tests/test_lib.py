@@ -1,9 +1,12 @@
 import io
+import random
 
 import numpy as np
 import pytest
 
 import conversion_calculator
+from conversion_calculator.models.bounds import max_values, min_values
+from conversion_calculator.models.column import Column
 
 
 def test_get_csv_template_as_str():
@@ -104,3 +107,26 @@ def test_find_crosswalk_raises_when_instrument_items_are_the_same_but_trials_are
             conversion_calculator.models.Column(column_name="cvlt_ldfr_c"),
             conversion_calculator.models.Column(column_name="ravlt_ldfr_t1_c"),
         )
+
+
+def dummy_column_factory(column_name: str):
+    """ when given a column name, will return a Column object with dummy values between the min and max values for that column """
+
+    try:
+        min_val = min_values.get(column_name, 0)
+        max_val = max_values[column_name]
+
+    except KeyError:
+        raise ValueError("Invalid column name")
+    
+    dummy_values = []
+    for _ in range(0,14):
+        dummy_values.append(random.randint(min_val, max_val)) 
+
+    return Column(column_name=column_name, column_values=dummy_values)
+
+
+def test_should_crosswalk_cvlt_columns():
+    assert conversion_calculator.lib.find_crosswalk(
+        dummy_column_factory("cvlt_ldfr_c"), dummy_column_factory("ravlt_ldfr_c")
+    )

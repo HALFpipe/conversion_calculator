@@ -27,11 +27,11 @@ class CrossWalk(BaseModel):
             raise ValueError("Invalid array type. Expected numpy.ndarray.")
         return lookup_table
 
-    def check_instrument_match(self, column: Column) -> bool:
+    def check_instrument_matches_crosswalk(self, column: Column) -> bool:
         # instrument must match
         return self.instrument == column.instrument
 
-    def check_instrument_item_match(self, column: Column) -> bool:
+    def check_instrument_item_matches_crosswalk(self, column: Column) -> bool:
         # check if the crosswalk and column have the same instrument item, or are both None
         if (column.instrument_item and self.instrument_item) and (
             column.instrument_item == self.instrument_item
@@ -40,10 +40,13 @@ class CrossWalk(BaseModel):
 
         if (column.instrument_item is None) and (self.instrument_item is None):
             return True
+        
+        if (column.instrument_item == 'dr' or self.instrument_item == 'dr') and (column.instrument_item == 'ldfr' or self.instrument_item == 'ldfr'):
+            return True
 
         return False
 
-    def check_trial_match(self, column: Column) -> bool:
+    def check_trial_matches_crosswalk(self, column: Column) -> bool:
         # check if the crosswalk and column have the same trial or are both None
 
         if (column.trial and self.trial) and (column.trial == self.trial):
@@ -54,7 +57,16 @@ class CrossWalk(BaseModel):
 
         return False
 
-    def check_same_attributes_set(self, column: Column) -> bool:
+    def check_target_instrument_in_lookup_table(self, target_column: Column) -> bool:
+        return target_column.instrument.id in self.column_order
+
+    def both_columns_have_same_attribute_set(self, source_column: Column, target_column: Column) -> bool:
+        for attribute in [ "instrument", "instrument_item", "instrument_metadata_type", "value_type", "trial" ]:
+            if getattr(source_column, attribute) != getattr(target_column, attribute):
+                return False
+        return True
+
+    def check_same_attributes_set_as_crosswalk(self, column: Column) -> bool:
         # check if the crosswalk and column have the same attributes set
         # please note, this only checks that the 'truthyness' of the attributes are the same
         # checking that those attributes are the same values is done elsewhere
@@ -83,20 +95,18 @@ class CrossWalk(BaseModel):
 
         return True
 
-    def check_target_instrument_in_lookup_table(self, target_column: Column) -> bool:
-        return target_column.instrument.id in self.column_order
-
     def walk_possible(self, source_column: Column, target_column: Column) -> bool:
         return all(
             [
-                self.check_instrument_match(source_column),
-                self.check_instrument_item_match(source_column),
-                self.check_trial_match(source_column),
-                self.check_instrument_item_match(target_column),
-                self.check_trial_match(target_column),
-                self.check_same_attributes_set(source_column),
-                self.check_same_attributes_set(target_column),
+                self.check_instrument_matches_crosswalk(source_column),
+                self.check_instrument_item_matches_crosswalk(source_column),
+                self.check_trial_matches_crosswalk(source_column),
+                self.check_instrument_item_matches_crosswalk(target_column),
+                self.check_trial_matches_crosswalk(target_column),
+                self.check_same_attributes_set_as_crosswalk(source_column),
+                self.check_same_attributes_set_as_crosswalk(target_column),
                 self.check_for_valid_values(source_column, target_column),
+                self.both_columns_have_same_attribute_set(source_column, target_column),
                 self.check_target_instrument_in_lookup_table(target_column),
             ]
         )

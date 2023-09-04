@@ -1,7 +1,5 @@
 import pytest
 
-from conversion_calculator.models import Column
-from conversion_calculator.models.bounds import max_values, min_values
 
 instrument_names = ["cvlt", "cvltc", "ravlt", "hvlt"]
 
@@ -85,21 +83,3 @@ def all_four_component_column_names():
                         f"{instrument_name}_{instrument_item_name}_{trial_name}_{instrument_value_type_name}"
                     )
     yield names
-
-
-@pytest.fixture
-def random_valid_cvlt_sdrf_value():
-    """use min_values and max_values to generate a random valid value for sdrf"""
-    yield list(range(min_values["cvlt_sdfr_c"], max_values["cvlt_sdfr_c"]))
-
-
-@pytest.fixture
-def random_valid_cvlt_ldrf_value():
-    """use min_values and max_values to generate a random valid value for ldrf"""
-    yield list(range(min_values["cvlt_ldfr_c"], max_values["cvlt_ldfr_c"]))
-
-
-@pytest.fixture
-def random_valid_cvlt_imfr_value():
-    """use min_values and max_values to generate a random valid value for imfr"""
-    yield list(range(min_values["cvlt_imfr_t1_c"], max_values["cvlt_imfr_t1_c"]))
