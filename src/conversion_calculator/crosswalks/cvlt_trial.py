@@ -14,13 +14,13 @@ trial_t5 = Trial(id="t5")
 trial_t15 = Trial(id="t15")
 trial_b = Trial(id='b')
 
-t_trial_column_order = {
+cvlt_imfr_trial_column_order = {
     "cvlt": 0,
     "ravlt": 1,
     "hvlt": 2,
 }
 
-t_trial_lookup_table = np.array(
+cvlt_imfr_trial_lookup_table = np.array(
     [
         [0, 0, 0],
         [1, 0, 3],
@@ -47,8 +47,8 @@ cvlt_imfr_t1_c = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_t1,
     value_type=value_type_c,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    column_order=cvlt_imfr_trial_column_order,
+    lookup_table=cvlt_imfr_trial_lookup_table,
 )
 
 cvlt_imfr_t2_c = CrossWalk(
@@ -56,8 +56,8 @@ cvlt_imfr_t2_c = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_t2,
     value_type=value_type_c,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    column_order=cvlt_imfr_trial_column_order,
+    lookup_table=cvlt_imfr_trial_lookup_table,
 )
 
 cvlt_imfr_t3_c = CrossWalk(
@@ -65,8 +65,8 @@ cvlt_imfr_t3_c = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_t3,
     value_type=value_type_c,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    column_order=cvlt_imfr_trial_column_order,
+    lookup_table=cvlt_imfr_trial_lookup_table,
 )
 
 cvlt_imfr_t4_c = CrossWalk(
@@ -74,8 +74,8 @@ cvlt_imfr_t4_c = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_t4,
     value_type=value_type_c,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    column_order=cvlt_imfr_trial_column_order,
+    lookup_table=cvlt_imfr_trial_lookup_table,
 )
 
 cvlt_imfr_t5_c = CrossWalk(
@@ -83,8 +83,8 @@ cvlt_imfr_t5_c = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_t5,
     value_type=value_type_c,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    column_order=cvlt_imfr_trial_column_order,
+    lookup_table=cvlt_imfr_trial_lookup_table,
 )
 
 cvlt_imfr_b_c = CrossWalk(
@@ -92,6 +92,6 @@ cvlt_imfr_b_c = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_b,
     value_type=value_type_c,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    column_order=cvlt_imfr_trial_column_order,
+    lookup_table=cvlt_imfr_trial_lookup_table,
 )

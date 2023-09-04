@@ -4,21 +4,21 @@ from conversion_calculator.models import (CrossWalk, Instrument,
                                           InstrumentItem, Trial)
 
 instrument_hvlt = Instrument(id="hvlt")
-instrument_hvlt_item_immediate_recall = InstrumentItem(id="imfr")
+instrument_item_imfr = InstrumentItem(id="imfr")
 
-instrument_trial_t1 = Trial(id="t1")
-instrument_trial_t2 = Trial(id="t2")
-instrument_trial_t3 = Trial(id="t3")
-instrument_trial_t4 = Trial(id="t4")
-instrument_trial_t5 = Trial(id="t5")
+trial_t1 = Trial(id="t1")
+trial_t2 = Trial(id="t2")
+trial_t3 = Trial(id="t3")
+trial_t4 = Trial(id="t4")
+trial_t5 = Trial(id="t5")
 
-t_trial_column_order = {
+hvlt_trial_column_order = {
     "hvlt": 0,
     "cvlt": 1,
     "ravlt": 2,
 }
 
-t_trial_lookup_table = np.array(
+hvlt_trial_lookup_table = np.array(
     [
         [0, 0, 0],
         [1, 0, 0],
@@ -38,75 +38,75 @@ t_trial_lookup_table = np.array(
 
 hvlt_t1 = CrossWalk(
     instrument=instrument_hvlt,
-    trial=instrument_trial_t1,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    trial=trial_t1,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_t2 = CrossWalk(
     instrument=instrument_hvlt,
-    trial=instrument_trial_t2,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    trial=trial_t2,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_t3 = CrossWalk(
     instrument=instrument_hvlt,
-    trial=instrument_trial_t3,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    trial=trial_t3,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_t4 = CrossWalk(
     instrument=instrument_hvlt,
-    trial=instrument_trial_t4,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    trial=trial_t4,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_t5 = CrossWalk(
     instrument=instrument_hvlt,
-    trial=instrument_trial_t5,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    trial=trial_t5,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_imfr_t1 = CrossWalk(
     instrument=instrument_hvlt,
-    instrument_item=instrument_hvlt_item_immediate_recall,
-    trial=instrument_trial_t1,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t1,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_imfr_t2 = CrossWalk(
     instrument=instrument_hvlt,
-    instrument_item=instrument_hvlt_item_immediate_recall,
-    trial=instrument_trial_t2,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t2,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_imfr_t3 = CrossWalk(
     instrument=instrument_hvlt,
-    instrument_item=instrument_hvlt_item_immediate_recall,
-    trial=instrument_trial_t3,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t3,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_imfr_t4 = CrossWalk(
     instrument=instrument_hvlt,
-    instrument_item=instrument_hvlt_item_immediate_recall,
-    trial=instrument_trial_t4,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t4,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )
 
 hvlt_imfr_t5 = CrossWalk(
     instrument=instrument_hvlt,
-    instrument_item=instrument_hvlt_item_immediate_recall,
-    trial=instrument_trial_t5,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t5,
+    column_order=hvlt_trial_column_order,
+    lookup_table=hvlt_trial_lookup_table,
 )

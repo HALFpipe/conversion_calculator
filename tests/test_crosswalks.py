@@ -19,4 +19,3 @@ def test_cvlt_imfr_c():
 
     assert convert_all_values(test_source_column, ravlt_imfr_target_column).equals(ravlt_target_values)
     assert convert_all_values(test_source_column, hvlt_imfr_target_column).equals(hvlt_target_values)
-

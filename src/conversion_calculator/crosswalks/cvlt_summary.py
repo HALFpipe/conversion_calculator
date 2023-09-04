@@ -7,7 +7,7 @@ instrument_cvlt = Instrument(id="cvlt")
 
 instrument_item_imfr = InstrumentItem(id="imfr")
 
-instrument_trial_t15 = Trial(id="t15")
+trial_t15 = Trial(id="t15")
 
 value_type_total = ValueType(id="total")
 
@@ -105,7 +105,7 @@ summary_lookup_table = np.array(
 
 cvlt_t15 = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t15,
+    trial=trial_t15,
     column_order=summary_column_order,
     lookup_table=summary_lookup_table,
 )
@@ -113,7 +113,7 @@ cvlt_t15 = CrossWalk(
 cvlt_imfr_t15_total = CrossWalk(
     instrument=instrument_cvlt,
     instrument_item=instrument_item_imfr,
-    trial=instrument_trial_t15,
+    trial=trial_t15,
     value_type=value_type_total,
     column_order=summary_column_order,
     lookup_table=summary_lookup_table,

@@ -4,7 +4,7 @@ from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, 
 
 instrument_cvlt = Instrument(id="cvlt")
 instrument_item_ldfr = InstrumentItem(id="ldfr")
-instrument_cvlt_value_type_c = ValueType(id="c")
+value_type_c = ValueType(id="c")
 
 cvlt_ldfr_column_order = {"cvlt": 0, "ravlt": 1, "hvlt": 2}
 cvlt_ldfr_lookup_table = np.array(
@@ -39,7 +39,7 @@ cvlt_ldfr = CrossWalk(
 cvlt_ldfr_c = CrossWalk(
     instrument=instrument_cvlt,
     instrument_item=instrument_item_ldfr,
-    value_type=instrument_cvlt_value_type_c,
+    value_type=value_type_c,
     column_order=cvlt_ldfr_column_order,
     lookup_table=cvlt_ldfr_lookup_table,
 )

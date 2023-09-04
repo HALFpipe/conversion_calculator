@@ -5,6 +5,7 @@ from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem
 instrument_ravlt = Instrument(id="ravlt")
 
 instrument_item_sdfr = InstrumentItem(id="sdfr")
+
 ravlt_sdfr_column_order = {"ravlt": 0, "cvlt": 1}
 ravlt_sdfr_lookup_table = np.array(
     [

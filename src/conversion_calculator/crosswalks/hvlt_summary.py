@@ -5,17 +5,17 @@ from conversion_calculator.models import (CrossWalk, Instrument,
 
 instrument_hvlt = Instrument(id="hvlt")
 
-instrument_hvlt_item_immediate_recall = InstrumentItem(id="imfr")
+instrument_item_imfr = InstrumentItem(id="imfr")
 
-instrument_trial_t15 = Trial(id="t15")
+trial_t15 = Trial(id="t15")
 
-summary_column_order = {
+hvlt_summary_column_order = {
     "hvlt": 0,
     "cvlt": 1,
     "ravlt": 2,
 }
 
-summary_lookup_table = np.array(
+hvlt_summary_lookup_table = np.array(
     [
         [0, 0, 0],
         [1, 0, 0],
@@ -59,15 +59,15 @@ summary_lookup_table = np.array(
 
 hvlt_t15 = CrossWalk(
     instrument=instrument_hvlt,
-    trial=instrument_trial_t15,
-    column_order=summary_column_order,
-    lookup_table=summary_lookup_table,
+    trial=trial_t15,
+    column_order=hvlt_summary_column_order,
+    lookup_table=hvlt_summary_lookup_table,
 )
 
 hvlt_imfr_t15 = CrossWalk(
     instrument=instrument_hvlt,
-    instrument_item=instrument_hvlt_item_immediate_recall,
-    trial=instrument_trial_t15,
-    column_order=summary_column_order,
-    lookup_table=summary_lookup_table,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t15,
+    column_order=hvlt_summary_column_order,
+    lookup_table=hvlt_summary_lookup_table,
 )
