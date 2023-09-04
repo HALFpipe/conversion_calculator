@@ -8,6 +8,7 @@ from .column import Column
 from .instrument import Instrument
 from .instrumentitem import InstrumentItem
 from .trial import Trial
+from .valuetype import ValueType
 
 
 class CrossWalk(BaseModel):
@@ -17,6 +18,7 @@ class CrossWalk(BaseModel):
     instrument_item: Optional[InstrumentItem] = None
     trial: Optional[Trial] = None
     value_bounds: Optional[ValueBounds] = None
+    value_type: Optional[ValueType] = None
 
     class Config:
         arbitrary_types_allowed = True
@@ -40,8 +42,8 @@ class CrossWalk(BaseModel):
 
         if (column.instrument_item is None) and (self.instrument_item is None):
             return True
-        
-        if (column.instrument_item == 'dr' or self.instrument_item == 'dr') and (column.instrument_item == 'ldfr' or self.instrument_item == 'ldfr'):
+        k
+        if (column.instrument_item in ['dr', 'ldfr']) and (self.instrument_item in ['dr', 'ldfr']):
             return True
 
         return False
@@ -110,3 +112,12 @@ class CrossWalk(BaseModel):
                 self.check_target_instrument_in_lookup_table(target_column),
             ]
         )
+
+def column_to_column_crosswalk_possible(crosswalk: CrossWalk, source_column: Column, target_column: Column) -> bool:
+    # crosswalk instrument and source instrument must match
+    # if set, crosswalk instrument item and source column instrument item must match
+    #    exception: if the source column instrument item is dr, or ldfr, then the crosswalk can be ldfr
+    # if set, crosswalk instrument meta data type and source column instrument meta data type must match
+    # if set, crosswalk trial and source column trial must match
+    # if set, crosswalk value_type and source column value_type must match
+    return crosswalk.walk_possible(source_column, target_column)
