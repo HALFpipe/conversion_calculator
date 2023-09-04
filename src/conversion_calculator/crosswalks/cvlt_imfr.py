@@ -1,9 +1,10 @@
 import numpy as np
 
-from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem
+from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, Trial, ValueType
 
 instrument_cvlt = Instrument(id="cvlt")
 instrument_item_imfr = InstrumentItem(id="imfr")
+value_type_c = ValueType(id="c")
 
 cvlt_imfr_column_order = {"cvlt": 0, "ravlt": 1, "hvlt": 2}
 cvlt_imfr_lookup_table = np.array(
@@ -28,9 +29,10 @@ cvlt_imfr_lookup_table = np.array(
     ]
 )
 
-cvlt_imfr = CrossWalk(
+cvlt_imfr_c = CrossWalk(
     instrument=instrument_cvlt,
     instrument_item=instrument_item_imfr,
+    value_type=value_type_c,
     column_order=cvlt_imfr_column_order,
     lookup_table=cvlt_imfr_lookup_table,
 )

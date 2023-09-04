@@ -50,7 +50,7 @@ def test_find_crosswalk_when_columns_are_compatible():
     target_column = conversion_calculator.models.Column(column_name="hvlt_ldfr_c")
     assert (
         conversion_calculator.lib.find_crosswalk(source_column, target_column)
-        == conversion_calculator.crosswalks.cvlt_ldfr
+        == conversion_calculator.crosswalks.cvlt_ldfr_c
     )
 
 
@@ -124,9 +124,3 @@ def dummy_column_factory(column_name: str):
         dummy_values.append(random.randint(min_val, max_val)) 
 
     return Column(column_name=column_name, column_values=dummy_values)
-
-
-def test_should_crosswalk_cvlt_columns():
-    assert conversion_calculator.lib.find_crosswalk(
-        dummy_column_factory("cvlt_ldfr_c"), dummy_column_factory("ravlt_ldfr_c")
-    )

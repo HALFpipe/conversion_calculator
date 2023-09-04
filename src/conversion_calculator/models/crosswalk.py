@@ -42,7 +42,7 @@ class CrossWalk(BaseModel):
 
         if (column.instrument_item is None) and (self.instrument_item is None):
             return True
-        k
+        
         if (column.instrument_item in ['dr', 'ldfr']) and (self.instrument_item in ['dr', 'ldfr']):
             return True
 
@@ -58,33 +58,26 @@ class CrossWalk(BaseModel):
             return True
 
         return False
+    
+    def check_value_type_matches_crosswalk(self, column: Column) -> bool:
+        # check if the crosswalk and column have the same value type or are both None
+
+        if (column.value_type and self.value_type) and (column.value_type == self.value_type):
+            return True
+
+        if column.value_type is None and self.value_type is None:
+            return True
+
+        return False
 
     def check_target_instrument_in_lookup_table(self, target_column: Column) -> bool:
         return target_column.instrument.id in self.column_order
 
     def both_columns_have_same_attribute_set(self, source_column: Column, target_column: Column) -> bool:
-        for attribute in [ "instrument", "instrument_item", "instrument_metadata_type", "value_type", "trial" ]:
+        for attribute in [ "instrument_item", "instrument_metadata_type", "value_type", "trial" ]:
             if getattr(source_column, attribute) != getattr(target_column, attribute):
                 return False
         return True
-
-    def check_same_attributes_set_as_crosswalk(self, column: Column) -> bool:
-        # check if the crosswalk and column have the same attributes set
-        # please note, this only checks that the 'truthyness' of the attributes are the same
-        # checking that those attributes are the same values is done elsewhere
-        same_attributes = []
-
-        if (
-            self.instrument_item is not None and column.instrument_item is not None
-        ) or (self.instrument_item is None and column.instrument_item is None):
-            same_attributes.append(True)
-
-        if (self.trial is not None and column.trial is not None) or (
-            self.trial is None and column.trial is None
-        ):
-            same_attributes.append(True)
-
-        return all(same_attributes)
 
     def check_for_valid_values(
         self, source_column: Column, target_column: Column
@@ -105,8 +98,7 @@ class CrossWalk(BaseModel):
                 self.check_trial_matches_crosswalk(source_column),
                 self.check_instrument_item_matches_crosswalk(target_column),
                 self.check_trial_matches_crosswalk(target_column),
-                self.check_same_attributes_set_as_crosswalk(source_column),
-                self.check_same_attributes_set_as_crosswalk(target_column),
+                self.check_value_type_matches_crosswalk(source_column),
                 self.check_for_valid_values(source_column, target_column),
                 self.both_columns_have_same_attribute_set(source_column, target_column),
                 self.check_target_instrument_in_lookup_table(target_column),

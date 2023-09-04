@@ -1,13 +1,15 @@
 import numpy as np
 
 from conversion_calculator.models import (CrossWalk, Instrument,
-                                          InstrumentItem, Trial)
+                                          InstrumentItem, ValueType, Trial)
 
 instrument_cvlt = Instrument(id="cvlt")
 
-instrument_cvlt_item_immediate_recall = InstrumentItem(id="imfr")
+instrument_item_imfr = InstrumentItem(id="imfr")
 
 instrument_trial_t15 = Trial(id="t15")
+
+value_type_total = ValueType(id="total")
 
 summary_column_order = {
     "cvlt": 0,
@@ -108,10 +110,11 @@ cvlt_t15 = CrossWalk(
     lookup_table=summary_lookup_table,
 )
 
-cvlt_imfr_t15 = CrossWalk(
+cvlt_imfr_t15_total = CrossWalk(
     instrument=instrument_cvlt,
-    instrument_item=instrument_cvlt_item_immediate_recall,
+    instrument_item=instrument_item_imfr,
     trial=instrument_trial_t15,
+    value_type=value_type_total,
     column_order=summary_column_order,
     lookup_table=summary_lookup_table,
 )

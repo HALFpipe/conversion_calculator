@@ -1,17 +1,18 @@
 import numpy as np
 
 from conversion_calculator.models import (CrossWalk, Instrument,
-                                          InstrumentItem, Trial)
+                                          InstrumentItem, Trial, ValueType)
 
 instrument_cvlt = Instrument(id="cvlt")
-
-instrument_cvlt_item_immediate_recall = InstrumentItem(id="imfr")
-
-instrument_trial_t1 = Trial(id="t1")
-instrument_trial_t2 = Trial(id="t2")
-instrument_trial_t3 = Trial(id="t3")
-instrument_trial_t4 = Trial(id="t4")
-instrument_trial_t5 = Trial(id="t5")
+instrument_item_imfr = InstrumentItem(id="imfr")
+value_type_c = ValueType(id="c")
+trial_t1 = Trial(id="t1")
+trial_t2 = Trial(id="t2")
+trial_t3 = Trial(id="t3")
+trial_t4 = Trial(id="t4")
+trial_t5 = Trial(id="t5")
+trial_t15 = Trial(id="t15")
+trial_b = Trial(id='b')
 
 t_trial_column_order = {
     "cvlt": 0,
@@ -41,76 +42,56 @@ t_trial_lookup_table = np.array(
     ]
 )
 
-cvlt_t1 = CrossWalk(
+cvlt_imfr_t1_c = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t1,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t1,
+    value_type=value_type_c,
     column_order=t_trial_column_order,
     lookup_table=t_trial_lookup_table,
 )
 
-cvlt_t2 = CrossWalk(
+cvlt_imfr_t2_c = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t2,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t2,
+    value_type=value_type_c,
     column_order=t_trial_column_order,
     lookup_table=t_trial_lookup_table,
 )
 
-cvlt_t3 = CrossWalk(
+cvlt_imfr_t3_c = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t3,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t3,
+    value_type=value_type_c,
     column_order=t_trial_column_order,
     lookup_table=t_trial_lookup_table,
 )
 
-cvlt_t4 = CrossWalk(
+cvlt_imfr_t4_c = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t4,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t4,
+    value_type=value_type_c,
     column_order=t_trial_column_order,
     lookup_table=t_trial_lookup_table,
 )
 
-cvlt_t5 = CrossWalk(
+cvlt_imfr_t5_c = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t5,
+    instrument_item=instrument_item_imfr,
+    trial=trial_t5,
+    value_type=value_type_c,
     column_order=t_trial_column_order,
     lookup_table=t_trial_lookup_table,
 )
 
-cvlt_imfr_t1 = CrossWalk(
+cvlt_imfr_b_c = CrossWalk(
     instrument=instrument_cvlt,
-    trial=instrument_trial_t1,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
-)
-
-cvlt_imfr_t2 = CrossWalk(
-    instrument=instrument_cvlt,
-    instrument_item=instrument_cvlt_item_immediate_recall,
-    trial=instrument_trial_t2,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
-)
-
-cvlt_imfr_t3 = CrossWalk(
-    instrument=instrument_cvlt,
-    instrument_item=instrument_cvlt_item_immediate_recall,
-    trial=instrument_trial_t3,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
-)
-
-cvlt_imfr_t4 = CrossWalk(
-    instrument=instrument_cvlt,
-    instrument_item=instrument_cvlt_item_immediate_recall,
-    trial=instrument_trial_t4,
-    column_order=t_trial_column_order,
-    lookup_table=t_trial_lookup_table,
-)
-
-cvlt_imfr_t5 = CrossWalk(
-    instrument=instrument_cvlt,
-    instrument_item=instrument_cvlt_item_immediate_recall,
-    trial=instrument_trial_t5,
+    instrument_item=instrument_item_imfr,
+    trial=trial_b,
+    value_type=value_type_c,
     column_order=t_trial_column_order,
     lookup_table=t_trial_lookup_table,
 )
