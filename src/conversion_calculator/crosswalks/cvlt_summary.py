@@ -11,13 +11,13 @@ trial_t15 = Trial(id="t15")
 
 value_type_total = ValueType(id="total")
 
-summary_column_order = {
+cvlt_summary_column_order = {
     "cvlt": 0,
     "ravlt": 1,
     "hvlt": 2,
 }
 
-summary_lookup_table = np.array(
+cvlt_summary_lookup_table = np.array(
     [
         [0, 0, 4],
         [1, 3, 6],
@@ -106,8 +106,8 @@ summary_lookup_table = np.array(
 cvlt_t15 = CrossWalk(
     instrument=instrument_cvlt,
     trial=trial_t15,
-    column_order=summary_column_order,
-    lookup_table=summary_lookup_table,
+    column_order=cvlt_summary_column_order,
+    lookup_table=cvlt_summary_lookup_table,
 )
 
 cvlt_imfr_t15_total = CrossWalk(
@@ -115,6 +115,6 @@ cvlt_imfr_t15_total = CrossWalk(
     instrument_item=instrument_item_imfr,
     trial=trial_t15,
     value_type=value_type_total,
-    column_order=summary_column_order,
-    lookup_table=summary_lookup_table,
+    column_order=cvlt_summary_column_order,
+    lookup_table=cvlt_summary_lookup_table,
 )

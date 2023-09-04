@@ -7,15 +7,15 @@ instrument_ravlt = Instrument(id="ravlt")
 
 instrument_ravlt_item_immediate_recall = InstrumentItem(id="imfr")
 
-instrument_trial_t15 = Trial(id="t15")
+trial_t15 = Trial(id="t15")
 
-summary_column_order = {
+ravlt_summary_column_order = {
     "ravlt": 0,
     "havlt": 1,
     "cvlt": 2,
 }
 
-summary_lookup_table = np.array(
+ravlt_summary_lookup_table = np.array(
     [
         [0, 4, 0],
         [1, 5, 0],
@@ -98,15 +98,15 @@ summary_lookup_table = np.array(
 
 ravlt_t15 = CrossWalk(
     instrument=instrument_ravlt,
-    trial=instrument_trial_t15,
-    column_order=summary_column_order,
-    lookup_table=summary_lookup_table,
+    trial=trial_t15,
+    column_order=ravlt_summary_column_order,
+    lookup_table=ravlt_summary_lookup_table,
 )
 
 ravlt_imfr_t15 = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_ravlt_item_immediate_recall,
-    trial=instrument_trial_t15,
-    column_order=summary_column_order,
-    lookup_table=summary_lookup_table,
+    trial=trial_t15,
+    column_order=ravlt_summary_column_order,
+    lookup_table=ravlt_summary_lookup_table,
 )
