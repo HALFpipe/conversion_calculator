@@ -4,6 +4,13 @@ from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, 
 
 instrument_cvlt = Instrument(id="cvlt")
 instrument_item_imfr = InstrumentItem(id="imfr")
+trial_t1 = Trial(id="t1")
+trial_t2 = Trial(id="t2")
+trial_t3 = Trial(id="t3")
+trial_t4 = Trial(id="t4")
+trial_t5 = Trial(id="t5")
+trial_t15 = Trial(id="t15")
+trial_b = Trial(id='b')
 value_type_c = ValueType(id="c")
 
 cvlt_imfr_column_order = {"cvlt": 0, "ravlt": 1, "hvlt": 2}

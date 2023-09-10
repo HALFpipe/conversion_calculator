@@ -1,10 +1,11 @@
 import numpy as np
 
-from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem
+from conversion_calculator.models import CrossWalk, Instrument, InstrumentItem, ValueType
 
 instrument_ravlt = Instrument(id="ravlt")
-
 instrument_item_sdfr = InstrumentItem(id="sdfr")
+value_type_c = ValueType(id="c")
+value_type_i = ValueType(id="i")
 
 ravlt_sdfr_column_order = {"ravlt": 0, "cvlt": 1}
 ravlt_sdfr_lookup_table = np.array(
@@ -29,9 +30,18 @@ ravlt_sdfr_lookup_table = np.array(
     ]
 )
 
-ravlt_sdfr = CrossWalk(
+ravlt_sdfr_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_item_sdfr,
+    value_type=value_type_c,
+    column_order=ravlt_sdfr_column_order,
+    lookup_table=ravlt_sdfr_lookup_table,
+)
+
+ravlt_sdfr_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_item_sdfr,
+    value_type=value_type_i,
     column_order=ravlt_sdfr_column_order,
     lookup_table=ravlt_sdfr_lookup_table,
 )

@@ -1,16 +1,19 @@
 import numpy as np
 
 from conversion_calculator.models import (CrossWalk, Instrument,
-                                          InstrumentItem, Trial)
+                                          InstrumentItem, Trial, ValueType)
 
 instrument_ravlt = Instrument(id="ravlt")
 instrument_ravlt_immediate_recall = InstrumentItem(id="imfr")
-
+value_type_c = ValueType(id="c")
+value_type_i = ValueType(id="i")
 trial_t1 = Trial(id="t1")
 trial_t2 = Trial(id="t2")
 trial_t3 = Trial(id="t3")
 trial_t4 = Trial(id="t4")
 trial_t5 = Trial(id="t5")
+trial_t15 = Trial(id="t15")
+trial_b = Trial(id='b')
 
 ravlt_trial_column_order = {
     "ravlt": 0,
@@ -39,77 +42,110 @@ ravlt_trial_lookup_table = np.array(
     ]
 )
 
-ravlt_t1 = CrossWalk(
-    instrument=instrument_ravlt,
-    trial=trial_t1,
-    column_order=ravlt_trial_column_order,
-    lookup_table=ravlt_trial_lookup_table,
-)
-
-ravlt_t2 = CrossWalk(
-    instrument=instrument_ravlt,
-    trial=trial_t2,
-    column_order=ravlt_trial_column_order,
-    lookup_table=ravlt_trial_lookup_table,
-)
-
-ravlt_t3 = CrossWalk(
-    instrument=instrument_ravlt,
-    trial=trial_t3,
-    column_order=ravlt_trial_column_order,
-    lookup_table=ravlt_trial_lookup_table,
-)
-
-ravlt_t4 = CrossWalk(
-    instrument=instrument_ravlt,
-    trial=trial_t4,
-    column_order=ravlt_trial_column_order,
-    lookup_table=ravlt_trial_lookup_table,
-)
-
-ravlt_t5 = CrossWalk(
-    instrument=instrument_ravlt,
-    trial=trial_t5,
-    column_order=ravlt_trial_column_order,
-    lookup_table=ravlt_trial_lookup_table,
-)
-
-ravlt_imfr_t1 = CrossWalk(
+ravlt_imfr_t1_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_ravlt_immediate_recall,
     trial=trial_t1,
+    value_type=value_type_c,
     column_order=ravlt_trial_column_order,
     lookup_table=ravlt_trial_lookup_table,
 )
 
-ravlt_imfr_t2 = CrossWalk(
+ravlt_imfr_t2_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_ravlt_immediate_recall,
     trial=trial_t2,
+    value_type=value_type_c,
     column_order=ravlt_trial_column_order,
     lookup_table=ravlt_trial_lookup_table,
 )
 
-ravlt_imfr_t3 = CrossWalk(
+ravlt_imfr_t3_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_ravlt_immediate_recall,
     trial=trial_t3,
+    value_type=value_type_c,
     column_order=ravlt_trial_column_order,
     lookup_table=ravlt_trial_lookup_table,
 )
 
-ravlt_imfr_t4 = CrossWalk(
+ravlt_imfr_t4_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_ravlt_immediate_recall,
     trial=trial_t4,
+    value_type=value_type_c,
     column_order=ravlt_trial_column_order,
     lookup_table=ravlt_trial_lookup_table,
 )
 
-ravlt_imfr_t5 = CrossWalk(
+ravlt_imfr_t5_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_ravlt_immediate_recall,
     trial=trial_t5,
+    value_type=value_type_c,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_b_c = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_b,
+    value_type=value_type_c,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_t1_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_t1,
+    value_type=value_type_i,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_t2_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_t2,
+    value_type=value_type_i,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_t3_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_t3,
+    value_type=value_type_i,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_t4_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_t4,
+    value_type=value_type_i,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_t5_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_t5,
+    value_type=value_type_i,
+    column_order=ravlt_trial_column_order,
+    lookup_table=ravlt_trial_lookup_table,
+)
+
+ravlt_imfr_b_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_ravlt_immediate_recall,
+    trial=trial_b,
+    value_type=value_type_i,
     column_order=ravlt_trial_column_order,
     lookup_table=ravlt_trial_lookup_table,
 )

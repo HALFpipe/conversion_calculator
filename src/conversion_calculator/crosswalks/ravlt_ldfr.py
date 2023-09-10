@@ -7,6 +7,7 @@ instrument_ravlt = Instrument(id="ravlt")
 instrument_item_ldfr = InstrumentItem(id="ldfr")
 
 c_value_type = ValueType(id="c")
+i_value_type = ValueType(id="i")
 
 ravlt_ldfr_column_order = {"ravlt": 0, "havlt": 1, "cvlt": 2}
 ravlt_ldfr_lookup_table = np.array(
@@ -41,6 +42,14 @@ ravlt_ldfr_c = CrossWalk(
     instrument=instrument_ravlt,
     instrument_item=instrument_item_ldfr,
     value_type = c_value_type,
+    column_order=ravlt_ldfr_column_order,
+    lookup_table=ravlt_ldfr_lookup_table,
+)
+
+ravlt_ldfr_i = CrossWalk(
+    instrument=instrument_ravlt,
+    instrument_item=instrument_item_ldfr,
+    value_type = i_value_type,
     column_order=ravlt_ldfr_column_order,
     lookup_table=ravlt_ldfr_lookup_table,
 )
